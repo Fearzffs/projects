@@ -51,6 +51,15 @@ TEST(RingBuffer, MoveOnlyValues) {
     ASSERT_TRUE(value.has_value());
     ASSERT_NE(value.value(), nullptr);
     EXPECT_EQ(*value.value(), 7);
+
+    // Move-only: push requires std::move; then pop again and re-check.
+    ASSERT_TRUE(buffer.try_push(std::move(value.value())));
+    EXPECT_EQ(value.value(), nullptr);
+
+    auto again = buffer.try_pop();
+    ASSERT_TRUE(again.has_value());
+    ASSERT_NE(again.value(), nullptr);
+    EXPECT_EQ(*again.value(), 7);
 }
 
 TEST(RingBuffer, ClearEmptiesBuffer) {
