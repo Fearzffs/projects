@@ -100,6 +100,18 @@ public:
         return value;
     }
 
+    /// Pops the newest element (undo last push). Returns nullopt if empty.
+    [[nodiscard]] std::optional<T> try_pop_back() {
+        std::scoped_lock lock(mutex_);
+        if (size_ == 0) {
+            return std::nullopt;
+        }
+        retreat_tail();
+        T value = std::move(buffer_[tail_]);
+        buffer_[tail_] = T{};
+        return value;
+    }
+
     void clear() {
         std::scoped_lock lock(mutex_);
         while (size_ > 0) {
@@ -117,6 +129,11 @@ private:
     void advance_tail() noexcept {
         tail_ = (tail_ + 1) % capacity_;
         ++size_;
+    }
+
+    void retreat_tail() noexcept {
+        tail_ = (tail_ + capacity_ - 1) % capacity_;
+        --size_;
     }
 
     mutable std::mutex mutex_;
