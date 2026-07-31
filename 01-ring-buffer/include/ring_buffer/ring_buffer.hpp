@@ -14,14 +14,17 @@ namespace portfolio {
 /// Design notes:
 /// - Capacity is fixed at construction; no reallocation under contention.
 /// - One empty slot is *not* reserved; full/empty are tracked with a size counter.
+/// - When auto_overwrite is true (default), a push into a full buffer drops the
+///   oldest element and inserts the new one (always succeeds).
+/// - When auto_overwrite is false, try_push returns false if the buffer is full.
 /// - Suitable for multi-producer / multi-consumer workloads where simplicity
 ///   and correctness matter more than lock-free throughput.
 /// - Not exception-safe for throwing T move/copy during push/pop; prefer noexcept T.
 template <typename T>
 class RingBuffer {
 public:
-    explicit RingBuffer(std::size_t capacity)
-        : capacity_(capacity), buffer_(capacity) {
+    explicit RingBuffer(std::size_t capacity, bool auto_overwrite = true)
+        : capacity_(capacity), auto_overwrite_(auto_overwrite), buffer_(capacity) {
         if (capacity == 0) {
             throw std::invalid_argument("RingBuffer capacity must be > 0");
         }
@@ -33,6 +36,7 @@ public:
     RingBuffer(RingBuffer&& other) noexcept {
         std::scoped_lock lock(other.mutex_);
         capacity_ = other.capacity_;
+        auto_overwrite_ = other.auto_overwrite_;
         head_ = other.head_;
         tail_ = other.tail_;
         size_ = other.size_;
@@ -48,6 +52,7 @@ public:
         }
         std::scoped_lock lock(mutex_, other.mutex_);
         capacity_ = other.capacity_;
+        auto_overwrite_ = other.auto_overwrite_;
         head_ = other.head_;
         tail_ = other.tail_;
         size_ = other.size_;
@@ -59,6 +64,8 @@ public:
     }
 
     [[nodiscard]] std::size_t capacity() const noexcept { return capacity_; }
+
+    [[nodiscard]] bool auto_overwrite() const noexcept { return auto_overwrite_; }
 
     [[nodiscard]] std::size_t size() const {
         std::scoped_lock lock(mutex_);
@@ -75,13 +82,18 @@ public:
         return size_ == capacity_;
     }
 
-    /// Returns false if the buffer is full.
-    /// Copies from lvalues, moves from rvalues (perfect forwarding).
+    /// Returns false only if the buffer is full and auto_overwrite is false.
+    /// When auto_overwrite is true and the buffer is full, drops the oldest
+    /// element then inserts. Copies from lvalues, moves from rvalues.
     template <typename U>
     bool try_push(U&& value) {
         std::scoped_lock lock(mutex_);
         if (size_ == capacity_) {
-            return false;
+            if (!auto_overwrite_) {
+                return false;
+            }
+            buffer_[head_] = T{};
+            advance_head();
         }
         buffer_[tail_] = std::forward<U>(value);
         advance_tail();
@@ -138,6 +150,7 @@ private:
 
     mutable std::mutex mutex_;
     std::size_t capacity_{0};
+    bool auto_overwrite_{true};
     std::size_t head_{0};
     std::size_t tail_{0};
     std::size_t size_{0};

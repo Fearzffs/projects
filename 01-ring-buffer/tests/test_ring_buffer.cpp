@@ -16,7 +16,8 @@ TEST(RingBuffer, RejectsZeroCapacity) {
 }
 
 TEST(RingBuffer, PushPopFifoOrder) {
-    RingBuffer<int> buffer(3);
+    // Disable overwrite so a full buffer rejects further pushes.
+    RingBuffer<int> buffer(3, /*auto_overwrite=*/false);
 
     ASSERT_TRUE(buffer.try_push(1));
     ASSERT_TRUE(buffer.try_push(2));
@@ -32,7 +33,7 @@ TEST(RingBuffer, PushPopFifoOrder) {
 }
 
 TEST(RingBuffer, WrapAroundPreservesOrder) {
-    RingBuffer<int> buffer(2);
+    RingBuffer<int> buffer(2, /*auto_overwrite=*/false);
 
     ASSERT_TRUE(buffer.try_push(10));
     ASSERT_TRUE(buffer.try_push(20));
@@ -90,7 +91,7 @@ TEST(RingBuffer, PopBackRemovesNewest) {
 }
 
 TEST(RingBuffer, PopBackAfterWrapAround) {
-    RingBuffer<int> buffer(2);
+    RingBuffer<int> buffer(2, /*auto_overwrite=*/false);
 
     ASSERT_TRUE(buffer.try_push(10));
     ASSERT_TRUE(buffer.try_push(20));
@@ -119,13 +120,57 @@ TEST(RingBuffer, PopBackMoveOnlyValues) {
     EXPECT_EQ(*oldest.value(), 1);
 }
 
+TEST(RingBuffer, AutoOverwriteDefaultsOn) {
+    RingBuffer<int> buffer(3);
+    EXPECT_TRUE(buffer.auto_overwrite());
+}
+
+TEST(RingBuffer, AutoOverwriteDropsOldestWhenFull) {
+    RingBuffer<int> buffer(3);  // default: auto_overwrite == true
+
+    ASSERT_TRUE(buffer.try_push(1));
+    ASSERT_TRUE(buffer.try_push(2));
+    ASSERT_TRUE(buffer.try_push(3));
+    EXPECT_TRUE(buffer.full());
+
+    // Overwrites: drop 1, insert 4 → [2, 3, 4]
+    ASSERT_TRUE(buffer.try_push(4));
+    EXPECT_TRUE(buffer.full());
+    EXPECT_EQ(buffer.size(), 3u);
+
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{2});
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{3});
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{4});
+    EXPECT_TRUE(buffer.empty());
+}
+
+TEST(RingBuffer, AutoOverwriteMoveOnlyWhenFull) {
+    RingBuffer<std::unique_ptr<int>> buffer(2);
+
+    ASSERT_TRUE(buffer.try_push(std::make_unique<int>(1)));
+    ASSERT_TRUE(buffer.try_push(std::make_unique<int>(2)));
+    ASSERT_TRUE(buffer.try_push(std::make_unique<int>(3)));  // drops 1
+
+    auto first = buffer.try_pop();
+    ASSERT_TRUE(first.has_value());
+    ASSERT_NE(first.value(), nullptr);
+    EXPECT_EQ(*first.value(), 2);
+
+    auto second = buffer.try_pop();
+    ASSERT_TRUE(second.has_value());
+    ASSERT_NE(second.value(), nullptr);
+    EXPECT_EQ(*second.value(), 3);
+}
+
 TEST(RingBuffer, ConcurrentProducersConsumers) {
     constexpr std::size_t kCapacity = 64;
     constexpr int kItemsPerProducer = 1000;
     constexpr int kProducers = 4;
     constexpr int kConsumers = 4;
 
-    RingBuffer<int> buffer(kCapacity);
+    // Must disable overwrite: otherwise producers drop unread items and
+    // produced == consumed would not hold.
+    RingBuffer<int> buffer(kCapacity, /*auto_overwrite=*/false);
     std::atomic<int> produced{0};
     std::atomic<int> consumed{0};
     std::atomic<bool> producers_done{false};
