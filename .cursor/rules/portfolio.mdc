@@ -1,0 +1,12 @@
+---
+description: C++ portfolio architecture and quality bar
+alwaysApply: true
+---
+
+# Portfolio rules
+
+- One project per numbered folder; do not invent a monorepo framework unless asked.
+- Prefer C++20, clear APIs, and tests over clever lock-free code unless the task is explicitly about lock-free design.
+- Public headers live under `include/`; keep READMEs short and decision-focused.
+- After implementation changes, run the project’s CMake configure/build/`ctest` loop from `AGENTS.md`.
+- Do not change public APIs without explicit user approval.

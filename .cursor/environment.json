@@ -1,0 +1,3 @@
+{
+  "install": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j$(nproc)"
+}

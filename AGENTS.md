@@ -1,0 +1,40 @@
+# AGENTS.md
+
+Instructions for Cursor agents working in this repository.
+
+## Ownership
+
+- The human lead owns architecture, public APIs, and “done.”
+- Agents own scaffolding, implementation drafts, tests, CI plumbing, and fix-up loops.
+- Do **not** redesign public APIs or add new portfolio projects unless the user asked.
+
+## Repo layout
+
+- Top-level numbered folders: `01-ring-buffer`, `02-…`
+- Each project is self-contained: `README.md`, `CMakeLists.txt`, `include/` or `src/`, `tests/`
+- Prefer extending the current project over creating shared frameworks early
+
+## Build & test (ring buffer)
+
+```bash
+cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 01-ring-buffer/build -j"$(nproc)"
+ctest --test-dir 01-ring-buffer/build --output-on-failure
+```
+
+Use `g++` explicitly: on some Cloud Agent images the default `c++` is Clang without a usable `libstdc++` link line.
+
+## Definition of done
+
+1. Configures cleanly with CMake
+2. Builds with no new warnings in touched targets (treat warnings as errors when easy)
+3. All discovered tests pass via `ctest --output-on-failure`
+4. Project README still matches the API
+5. No drive-by refactors outside the requested scope
+
+## Cursor Cloud specific instructions
+
+- After code changes, always rebuild and run the relevant `ctest` command above
+- Prefer fixing compile/test failures before opening or updating a PR
+- If blocked by toolchain/network (e.g. FetchContent), report the exact error and stop
+- Keep commits focused; do not rewrite unrelated portfolio folders

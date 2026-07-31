@@ -1,0 +1,14 @@
+# Build trees
+**/build/
+**/cmake-build-*/
+
+# IDE / tooling
+.cache/
+compile_commands.json
+.vscode/
+.idea/
+
+# Editor junk
+*.swp
+*~
+.DS_Store
