@@ -6,7 +6,7 @@ Mutex-synchronized fixed-capacity FIFO ring buffer in modern C++20.
 
 A small, complete library that shows:
 
-- clear public API (`try_push` / `try_pop`, no blocking surprises)
+- clear public API (`try_push` / `try_pop` / `try_pop_back`, no blocking surprises)
 - concurrency correctness under multi-producer / multi-consumer load
 - CMake + GoogleTest + CI as the template for later portfolio folders
 
@@ -23,7 +23,8 @@ ctest --test-dir 01-ring-buffer/build --output-on-failure
 ```cpp
 portfolio::RingBuffer<int> q(8);
 q.try_push(42);
-auto item = q.try_pop();  // std::optional<int>
+auto front = q.try_pop();       // oldest — std::optional<int>
+auto back = q.try_pop_back();   // newest — std::optional<int>
 ```
 
 ## Decisions

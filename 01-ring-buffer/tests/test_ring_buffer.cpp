@@ -63,6 +63,53 @@ TEST(RingBuffer, ClearEmptiesBuffer) {
     EXPECT_EQ(buffer.try_pop(), std::nullopt);
 }
 
+TEST(RingBuffer, PopBackRemovesNewest) {
+    RingBuffer<int> buffer(3);
+
+    EXPECT_EQ(buffer.try_pop_back(), std::nullopt);
+
+    ASSERT_TRUE(buffer.try_push(1));
+    ASSERT_TRUE(buffer.try_push(2));
+    ASSERT_TRUE(buffer.try_push(3));
+
+    EXPECT_EQ(buffer.try_pop_back(), std::optional<int>{3});
+    EXPECT_EQ(buffer.try_pop_back(), std::optional<int>{2});
+    EXPECT_EQ(buffer.size(), 1u);
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{1});
+    EXPECT_EQ(buffer.try_pop_back(), std::nullopt);
+    EXPECT_TRUE(buffer.empty());
+}
+
+TEST(RingBuffer, PopBackAfterWrapAround) {
+    RingBuffer<int> buffer(2);
+
+    ASSERT_TRUE(buffer.try_push(10));
+    ASSERT_TRUE(buffer.try_push(20));
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{10});
+    ASSERT_TRUE(buffer.try_push(30));
+
+    EXPECT_EQ(buffer.try_pop_back(), std::optional<int>{30});
+    EXPECT_EQ(buffer.try_pop(), std::optional<int>{20});
+    EXPECT_TRUE(buffer.empty());
+}
+
+TEST(RingBuffer, PopBackMoveOnlyValues) {
+    RingBuffer<std::unique_ptr<int>> buffer(2);
+
+    ASSERT_TRUE(buffer.try_push(std::make_unique<int>(1)));
+    ASSERT_TRUE(buffer.try_push(std::make_unique<int>(2)));
+
+    auto newest = buffer.try_pop_back();
+    ASSERT_TRUE(newest.has_value());
+    ASSERT_NE(newest.value(), nullptr);
+    EXPECT_EQ(*newest.value(), 2);
+
+    auto oldest = buffer.try_pop();
+    ASSERT_TRUE(oldest.has_value());
+    ASSERT_NE(oldest.value(), nullptr);
+    EXPECT_EQ(*oldest.value(), 1);
+}
+
 TEST(RingBuffer, ConcurrentProducersConsumers) {
     constexpr std::size_t kCapacity = 64;
     constexpr int kItemsPerProducer = 1000;
