@@ -33,12 +33,18 @@ Microsoft's `ms-vscode.cpptools` does **not** appear in Cursor (licensing). Use 
    - **Debug ring_buffer_tests (one test)** — prompts for a `--gtest_filter`
 6. Needs `g++` and `gdb` (`sudo apt install build-essential gdb cmake` on Ubuntu).
 
-**Build only (no debugger):** `Ctrl+Shift+B` runs the default task `build`  
-(configure + compile). If that shortcut opens something else in Cursor:
+**Build only (no debugger):** press `Ctrl+Shift+B` — it should run the default
+task `build` (configure + compile) in the terminal, **not** open a browser.
+
+If a browser opens instead, Cursor/another extension stole the shortcut:
 
 1. `Ctrl+K` then `Ctrl+S` (Keyboard Shortcuts)
-2. Search: `workbench.action.tasks.build`
-3. Bind it to `Ctrl+Shift+B`
+2. Click the search box, then press `Ctrl+Shift+B` so it finds what owns that key
+3. Remove / unbind whatever opens the browser (Live Server, Simple Browser, etc.)
+4. Search: `workbench.action.tasks.build` (**Tasks: Run Build Task**)
+5. Bind **that** to `Ctrl+Shift+B`
+
+Until then you can still build with: `Ctrl+Shift+P` → **Tasks: Run Build Task** → **build**
 
 ## API sketch
 
