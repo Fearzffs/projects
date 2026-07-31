@@ -5,8 +5,14 @@
 # IDE / tooling
 .cache/
 compile_commands.json
-.vscode/
 .idea/
+# Share Cursor/VS Code debug + task configs; ignore local-only clutter
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+!.vscode/settings.json
 
 # Editor junk
 *.swp

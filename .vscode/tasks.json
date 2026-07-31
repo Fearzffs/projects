@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: configure ring-buffer (Debug)",
+      "type": "shell",
+      "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build ring-buffer tests",
+      "type": "shell",
+      "command": "cmake --build 01-ring-buffer/build -j$(nproc)",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure ring-buffer (Debug)"
+    },
+    {
+      "label": "CTest: run ring-buffer tests",
+      "type": "shell",
+      "command": "ctest --test-dir 01-ring-buffer/build --output-on-failure",
+      "group": "test",
+      "problemMatcher": [],
+      "dependsOn": "CMake: build ring-buffer tests"
+    }
+  ]
+}

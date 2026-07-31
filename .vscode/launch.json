@@ -1,0 +1,77 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug ring_buffer_tests (all)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build ring-buffer tests"
+    },
+    {
+      "name": "Debug ring_buffer_tests (one test)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
+      "args": [
+        "--gtest_filter=${input:gtestFilter}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build ring-buffer tests"
+    },
+    {
+      "name": "Debug ConcurrentProducersConsumers",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
+      "args": [
+        "--gtest_filter=RingBuffer.ConcurrentProducersConsumers"
+      ],
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build ring-buffer tests"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gtestFilter",
+      "type": "promptString",
+      "description": "GoogleTest filter (suite.testcase)",
+      "default": "RingBuffer.AutoOverwriteDropsOldestWhenFull"
+    }
+  ]
+}
