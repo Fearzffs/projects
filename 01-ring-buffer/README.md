@@ -21,14 +21,17 @@ ctest --test-dir 01-ring-buffer/build --output-on-failure
 
 ## Debug tests in Cursor / VS Code
 
-1. Install the **C/C++** extension (`ms-vscode.cpptools`) if prompted.
-2. Open the repo root as the workspace folder.
-3. Set a breakpoint in `tests/test_ring_buffer.cpp` or `include/ring_buffer/ring_buffer.hpp`.
-4. Run → Start Debugging, or pick a config in the Run and Debug panel:
+Microsoft's `ms-vscode.cpptools` does **not** appear in Cursor (licensing). Use Cursor's extension instead.
+
+1. Extensions (`Ctrl+Shift+X`) → search exactly: `@id:anysphere.cpptools`
+2. Install **Anysphere C/C++** (`anysphere.cpptools`). Optional fallback debugger: `@id:vadimcn.vscode-lldb` (CodeLLDB).
+3. Open the **repo root** as the workspace folder (the folder that contains `.vscode/` and `01-ring-buffer/`).
+4. Set a breakpoint in `tests/test_ring_buffer.cpp` or `include/ring_buffer/ring_buffer.hpp`.
+5. Run and Debug → pick:
    - **Debug ring_buffer_tests (all)**
    - **Debug ConcurrentProducersConsumers**
    - **Debug ring_buffer_tests (one test)** — prompts for a `--gtest_filter`
-5. Needs `g++` and `gdb` on the machine (`sudo apt install build-essential gdb cmake` on Ubuntu).
+6. Needs `g++` and `gdb` (`sudo apt install build-essential gdb cmake` on Ubuntu).
 
 ## API sketch
 
