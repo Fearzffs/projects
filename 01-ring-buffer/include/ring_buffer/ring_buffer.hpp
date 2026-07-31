@@ -76,23 +76,14 @@ public:
     }
 
     /// Returns false if the buffer is full.
-    bool try_push(const T& value) {
+    /// Copies from lvalues, moves from rvalues (perfect forwarding).
+    template <typename U>
+    bool try_push(U&& value) {
         std::scoped_lock lock(mutex_);
         if (size_ == capacity_) {
             return false;
         }
-        buffer_[tail_] = value;
-        advance_tail();
-        return true;
-    }
-
-    /// Returns false if the buffer is full.
-    bool try_push(T&& value) {
-        std::scoped_lock lock(mutex_);
-        if (size_ == capacity_) {
-            return false;
-        }
-        buffer_[tail_] = std::move(value);
+        buffer_[tail_] = std::forward<U>(value);
         advance_tail();
         return true;
     }
