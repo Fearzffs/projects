@@ -64,6 +64,26 @@
         }
       ],
       "preLaunchTask": "CMake: build ring-buffer tests"
+    },
+    {
+      "name": "CodeLLDB: ring_buffer_tests (all)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "CMake: build ring-buffer tests"
+    },
+    {
+      "name": "CodeLLDB: ConcurrentProducersConsumers",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
+      "args": [
+        "--gtest_filter=RingBuffer.ConcurrentProducersConsumers"
+      ],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "CMake: build ring-buffer tests"
     }
   ],
   "inputs": [
