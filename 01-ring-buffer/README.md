@@ -33,6 +33,13 @@ Microsoft's `ms-vscode.cpptools` does **not** appear in Cursor (licensing). Use 
    - **Debug ring_buffer_tests (one test)** — prompts for a `--gtest_filter`
 6. Needs `g++` and `gdb` (`sudo apt install build-essential gdb cmake` on Ubuntu).
 
+**Build only (no debugger):** `Ctrl+Shift+B` runs the default task `build`  
+(configure + compile). If that shortcut opens something else in Cursor:
+
+1. `Ctrl+K` then `Ctrl+S` (Keyboard Shortcuts)
+2. Search: `workbench.action.tasks.build`
+3. Bind it to `Ctrl+Shift+B`
+
 ## API sketch
 
 ```cpp
