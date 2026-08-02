@@ -14,6 +14,7 @@ This is the human-facing cheat sheet. Machine instructions live in `AGENTS.md`.
 1. Open [Cloud Agents environments](https://cursor.com/dashboard/cloud-agents#environments) and ensure this repo can configure + build + test (snapshot once green).
 2. Keep `AGENTS.md` and `.cursor/rules/` accurate — that is how agents know the quality bar.
 3. Optional: create an Automation at [cursor.com/automations](https://cursor.com/automations) that runs on PR push: build + `ctest`, comment results.
+4. On the Windows home PC: install WSL, reboot, then run `scripts/wsl-finish-setup.ps1`. Keep the clone at `D:\workspace\projects` and open it in Cursor via WSL (`/mnt/d/workspace/projects`).
 
 ## Prompt pattern that works
 

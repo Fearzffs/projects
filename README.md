@@ -17,6 +17,12 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 - CMake + tests required before a project is “done”
 - Short README in each folder: what / why / how to build / decisions
 
+## Windows + Ubuntu
+
+Same git clone on both machines. Build with **g++ via CMake** on Ubuntu (work) and
+**WSL Ubuntu** on Windows (home), keeping the Windows checkout at `D:\workspace\projects`.
+See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
+
 ## Agent workflow
 
 See [`AGENTS.md`](AGENTS.md). Architecture stays with me; agents implement, build, and test.

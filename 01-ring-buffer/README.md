@@ -19,6 +19,11 @@ cmake --build 01-ring-buffer/build -j"$(nproc)"
 ctest --test-dir 01-ring-buffer/build --output-on-failure
 ```
 
+On **Windows**, run those commands inside **WSL Ubuntu** (repo path:
+`/mnt/d/workspace/projects`). One-time setup after reboot:
+`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\wsl-finish-setup.ps1`.
+Native Ubuntu (work PC) uses the same commands with no WSL step.
+
 ## Debug tests in Cursor / VS Code
 
 Microsoft's `ms-vscode.cpptools` does **not** appear in Cursor (licensing). Use Cursor's extension instead.
@@ -26,12 +31,15 @@ Microsoft's `ms-vscode.cpptools` does **not** appear in Cursor (licensing). Use 
 1. Extensions (`Ctrl+Shift+X`) → search exactly: `@id:anysphere.cpptools`
 2. Install **Anysphere C/C++** (`anysphere.cpptools`). Optional fallback debugger: `@id:vadimcn.vscode-lldb` (CodeLLDB).
 3. Open the **repo root** as the workspace folder (the folder that contains `.vscode/` and `01-ring-buffer/`).
+   On Windows, prefer **WSL: Open Folder in WSL…** → `/mnt/d/workspace/projects` so IntelliSense and gdb match Linux.
 4. Set a breakpoint in `tests/test_ring_buffer.cpp` or `include/ring_buffer/ring_buffer.hpp`.
 5. Run and Debug → pick:
    - **Debug ring_buffer_tests (all)**
    - **Debug ConcurrentProducersConsumers**
    - **Debug ring_buffer_tests (one test)** — prompts for a `--gtest_filter`
-6. Needs `g++` and `gdb` (`sudo apt install build-essential gdb cmake` on Ubuntu).
+6. Needs `g++` and `gdb` (`sudo apt install build-essential gdb cmake` on Ubuntu / WSL).
+
+If the debug console briefly shows `GDB: Failed to set controlling terminal: Operation not permitted`, that is usually harmless. Launch configs disable Ubuntu `debuginfod` so the session does not hang on that warning.
 
 **Build only (no debugger):** press `Ctrl+Shift+B` — it should run the default
 task `build` (configure + compile) in the terminal, **not** open a browser.

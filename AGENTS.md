@@ -24,6 +24,16 @@ ctest --test-dir 01-ring-buffer/build --output-on-failure
 
 Use `g++` explicitly: on some Cloud Agent images the default `c++` is Clang without a usable `libstdc++` link line.
 
+## Windows (WSL)
+
+Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive
+(`D:\workspace\projects` → `/mnt/d/workspace/projects`). Work PC stays native Ubuntu.
+
+- One-time (after WSL feature install + reboot):  
+  `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\wsl-finish-setup.ps1`
+- Prefer Cursor **WSL: Open Folder in WSL…** on `/mnt/d/workspace/projects` for IntelliSense + gdb.
+- If the workspace is opened from Windows, `.vscode/tasks.json` still routes build/test through `wsl.exe`.
+
 ## Definition of done
 
 1. Configures cleanly with CMake

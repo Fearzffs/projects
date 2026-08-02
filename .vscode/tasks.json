@@ -6,6 +6,15 @@
       "detail": "Configure (if needed) and build ring_buffer_tests",
       "type": "shell",
       "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j\"$(nproc)\""
+      },
       "group": {
         "kind": "build",
         "isDefault": true
@@ -21,6 +30,15 @@
       "label": "CMake: configure ring-buffer (Debug)",
       "type": "shell",
       "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++"
+      },
       "group": "build",
       "problemMatcher": []
     },
@@ -28,6 +46,15 @@
       "label": "CMake: build ring-buffer tests",
       "type": "shell",
       "command": "cmake --build 01-ring-buffer/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake --build 01-ring-buffer/build -j\"$(nproc)\""
+      },
       "group": "build",
       "problemMatcher": ["$gcc"],
       "dependsOn": "CMake: configure ring-buffer (Debug)"
@@ -37,6 +64,15 @@
       "detail": "Build then run ctest",
       "type": "shell",
       "command": "ctest --test-dir 01-ring-buffer/build --output-on-failure",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && ctest --test-dir 01-ring-buffer/build --output-on-failure"
+      },
       "group": {
         "kind": "test",
         "isDefault": true
