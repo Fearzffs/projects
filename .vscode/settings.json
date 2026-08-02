@@ -1,5 +1,7 @@
 {
   // Ensure Ctrl+Shift+B / "Run Build Task" uses the default build task
   // in this workspace (see tasks.json label "build").
-  "task.quickOpen.detail": true
+  "task.quickOpen.detail": true,
+  // Match .gitattributes: keep LF so Windows + WSL git agree.
+  "files.eol": "\n"
 }
