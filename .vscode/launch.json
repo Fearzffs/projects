@@ -8,7 +8,12 @@
       "program": "${workspaceFolder}/02-spsc-ring-buffer/build/tests/spsc_ring_buffer_tests",
       "args": [],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -16,6 +21,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
@@ -30,7 +40,12 @@
         "--gtest_filter=${input:spscGtestFilter}"
       ],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -38,6 +53,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
@@ -52,7 +72,12 @@
         "--gtest_filter=SpscRingBuffer.ConcurrentSingleProducerSingleConsumer"
       ],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -60,6 +85,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
@@ -81,7 +111,12 @@
       "program": "${workspaceFolder}/01-ring-buffer/build/tests/ring_buffer_tests",
       "args": [],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -89,6 +124,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
@@ -103,7 +143,12 @@
         "--gtest_filter=${input:ringGtestFilter}"
       ],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -111,6 +156,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
@@ -125,7 +175,12 @@
         "--gtest_filter=RingBuffer.ConcurrentProducersConsumers"
       ],
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
@@ -133,6 +188,11 @@
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
           "ignoreFailures": true
         }
       ],
