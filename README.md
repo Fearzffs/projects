@@ -9,6 +9,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | Folder | Focus |
 |---|---|
 | [`01-ring-buffer`](01-ring-buffer) | Mutex-synchronized fixed-capacity FIFO, C++20, GoogleTest |
+| [`02-spsc-ring-buffer`](02-spsc-ring-buffer) | Lock-free SPSC fixed-capacity FIFO, atomics, GoogleTest |
 
 ## Conventions
 

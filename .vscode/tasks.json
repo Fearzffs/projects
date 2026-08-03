@@ -3,13 +3,57 @@
   "tasks": [
     {
       "label": "build",
-      "detail": "Configure (if needed) and build ring_buffer_tests",
+      "detail": "Configure (if needed) and build spsc_ring_buffer_tests",
       "type": "shell",
-      "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j\"$(nproc)\"",
+      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\"",
       "group": {
         "kind": "build",
         "isDefault": true
       },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "test",
+      "detail": "Build then run ctest for SPSC ring buffer",
+      "type": "shell",
+      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\" && cd 02-spsc-ring-buffer/build && ctest --output-on-failure",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "CMake: configure spsc-ring-buffer (Debug)",
+      "type": "shell",
+      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build spsc-ring-buffer tests",
+      "type": "shell",
+      "command": "cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\"",
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure spsc-ring-buffer (Debug)"
+    },
+    {
+      "label": "build ring-buffer",
+      "detail": "Configure (if needed) and build ring_buffer_tests",
+      "type": "shell",
+      "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j\"$(nproc)\"",
+      "group": "build",
       "problemMatcher": ["$gcc"],
       "presentation": {
         "reveal": "always",
@@ -33,16 +77,17 @@
       "dependsOn": "CMake: configure ring-buffer (Debug)"
     },
     {
-      "label": "test",
-      "detail": "Build then run ctest",
+      "label": "test ring-buffer",
+      "detail": "Build then run ctest for mutex ring buffer",
       "type": "shell",
-      "command": "ctest --test-dir 01-ring-buffer/build --output-on-failure",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
-      "problemMatcher": [],
-      "dependsOn": "build"
+      "command": "cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 01-ring-buffer/build -j\"$(nproc)\" && cd 01-ring-buffer/build && ctest --output-on-failure",
+      "group": "test",
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
     }
   ]
 }

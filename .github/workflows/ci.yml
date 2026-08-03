@@ -15,3 +15,14 @@ jobs:
         run: cmake --build 01-ring-buffer/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 01-ring-buffer/build --output-on-failure
+
+  spsc-ring-buffer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 02-spsc-ring-buffer/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 02-spsc-ring-buffer/build --output-on-failure

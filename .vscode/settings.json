@@ -1,5 +1,8 @@
 {
-  // Ensure Ctrl+Shift+B / "Run Build Task" uses the default build task
-  // in this workspace (see tasks.json label "build").
-  "task.quickOpen.detail": true
+  // Ctrl+Shift+B → default "build" task (SPSC ring buffer).
+  // Ctrl+Shift+P → "Tasks: Run Test Task" → default "test" task.
+  "task.quickOpen.detail": true,
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/02-spsc-ring-buffer/build/compile_commands.json",
+  "C_Cpp.default.cppStandard": "c++20",
+  "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }

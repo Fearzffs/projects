@@ -14,7 +14,11 @@ Instructions for Cursor agents working in this repository.
 - Each project is self-contained: `README.md`, `CMakeLists.txt`, `include/` or `src/`, `tests/`
 - Prefer extending the current project over creating shared frameworks early
 
-## Build & test (ring buffer)
+## Build & test
+
+Use `g++` explicitly: on some Cloud Agent images the default `c++` is Clang without a usable `libstdc++` link line.
+
+### 01 — ring buffer
 
 ```bash
 cmake -S 01-ring-buffer -B 01-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
@@ -22,7 +26,14 @@ cmake --build 01-ring-buffer/build -j"$(nproc)"
 ctest --test-dir 01-ring-buffer/build --output-on-failure
 ```
 
-Use `g++` explicitly: on some Cloud Agent images the default `c++` is Clang without a usable `libstdc++` link line.
+### 02 — SPSC ring buffer
+
+```bash
+cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 02-spsc-ring-buffer/build -j"$(nproc)"
+ctest --test-dir 02-spsc-ring-buffer/build --output-on-failure
+```
+
 
 ## Definition of done
 
