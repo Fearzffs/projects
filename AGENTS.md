@@ -34,6 +34,13 @@ cmake --build 02-spsc-ring-buffer/build -j"$(nproc)"
 ctest --test-dir 02-spsc-ring-buffer/build --output-on-failure
 ```
 
+### 03 — thread pool
+
+```bash
+cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 03-thread-pool/build -j"$(nproc)"
+ctest --test-dir 03-thread-pool/build --output-on-failure
+```
 
 ## Windows (WSL)
 

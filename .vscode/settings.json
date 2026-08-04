@@ -1,8 +1,8 @@
 {
-  // Ctrl+Shift+B → default "build" task (SPSC ring buffer).
+  // Ctrl+Shift+B → default "build" task (thread pool).
   // Ctrl+Shift+P → "Tasks: Run Test Task" → default "test" task.
   "task.quickOpen.detail": true,
-  "C_Cpp.default.compileCommands": "${workspaceFolder}/02-spsc-ring-buffer/build/compile_commands.json",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/03-thread-pool/build/compile_commands.json",
   "C_Cpp.default.cppStandard": "c++20",
   "C_Cpp.default.compilerPath": "/usr/bin/g++",
   // Match .gitattributes: keep LF so Windows + WSL git agree.

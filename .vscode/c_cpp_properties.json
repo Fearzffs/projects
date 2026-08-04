@@ -5,15 +5,17 @@
       "includePath": [
         "${workspaceFolder}/01-ring-buffer/include",
         "${workspaceFolder}/02-spsc-ring-buffer/include",
+        "${workspaceFolder}/03-thread-pool/include",
         "${workspaceFolder}/01-ring-buffer/build/_deps/googletest-src/googletest/include",
-        "${workspaceFolder}/02-spsc-ring-buffer/build/_deps/googletest-src/googletest/include"
+        "${workspaceFolder}/02-spsc-ring-buffer/build/_deps/googletest-src/googletest/include",
+        "${workspaceFolder}/03-thread-pool/build/_deps/googletest-src/googletest/include"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/g++",
       "cStandard": "c17",
       "cppStandard": "c++20",
       "intelliSenseMode": "linux-gcc-x64",
-      "compileCommands": "${workspaceFolder}/02-spsc-ring-buffer/build/compile_commands.json"
+      "compileCommands": "${workspaceFolder}/03-thread-pool/build/compile_commands.json"
     }
   ],
   "version": 4

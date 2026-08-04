@@ -3,9 +3,9 @@
   "tasks": [
     {
       "label": "build",
-      "detail": "Configure (if needed) and build spsc_ring_buffer_tests",
+      "detail": "Configure (if needed) and build thread_pool_tests",
       "type": "shell",
-      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\"",
+      "command": "cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 03-thread-pool/build -j\"$(nproc)\"",
       "windows": {
         "options": {
           "shell": {
@@ -13,7 +13,7 @@
             "args": ["-e", "bash", "-lc"]
           }
         },
-        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\""
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 03-thread-pool/build -j\"$(nproc)\""
       },
       "group": {
         "kind": "build",
@@ -28,9 +28,9 @@
     },
     {
       "label": "test",
-      "detail": "Build then run ctest for SPSC ring buffer",
+      "detail": "Build then run ctest for thread pool",
       "type": "shell",
-      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\" && cd 02-spsc-ring-buffer/build && ctest --output-on-failure",
+      "command": "cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 03-thread-pool/build -j\"$(nproc)\" && cd 03-thread-pool/build && ctest --output-on-failure",
       "windows": {
         "options": {
           "shell": {
@@ -38,12 +38,67 @@
             "args": ["-e", "bash", "-lc"]
           }
         },
-        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\" && cd 02-spsc-ring-buffer/build && ctest --output-on-failure"
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 03-thread-pool/build -j\"$(nproc)\" && cd 03-thread-pool/build && ctest --output-on-failure"
       },
       "group": {
         "kind": "test",
         "isDefault": true
       },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "CMake: configure thread-pool (Debug)",
+      "type": "shell",
+      "command": "cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 03-thread-pool -B 03-thread-pool/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build thread-pool tests",
+      "type": "shell",
+      "command": "cmake --build 03-thread-pool/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake --build 03-thread-pool/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure thread-pool (Debug)"
+    },
+    {
+      "label": "build spsc-ring-buffer",
+      "detail": "Configure (if needed) and build spsc_ring_buffer_tests",
+      "type": "shell",
+      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\""
+      },
+      "group": "build",
       "problemMatcher": ["$gcc"],
       "presentation": {
         "reveal": "always",
@@ -83,6 +138,28 @@
       "group": "build",
       "problemMatcher": ["$gcc"],
       "dependsOn": "CMake: configure spsc-ring-buffer (Debug)"
+    },
+    {
+      "label": "test spsc-ring-buffer",
+      "detail": "Build then run ctest for SPSC ring buffer",
+      "type": "shell",
+      "command": "cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\" && cd 02-spsc-ring-buffer/build && ctest --output-on-failure",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 02-spsc-ring-buffer -B 02-spsc-ring-buffer/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 02-spsc-ring-buffer/build -j\"$(nproc)\" && cd 02-spsc-ring-buffer/build && ctest --output-on-failure"
+      },
+      "group": "test",
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
     },
     {
       "label": "build ring-buffer",
