@@ -26,6 +26,10 @@ Same git clone on both machines. Build with **g++ via CMake** on Ubuntu (work) a
 **WSL Ubuntu** on Windows (home), keeping the Windows checkout at `D:\workspace\projects`.
 See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
 
+## Backlog
+
+Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next: **`05-async-logger`**.
+
 ## Agent workflow
 
 See [`AGENTS.md`](AGENTS.md). Architecture stays with me; agents implement, build, and test.

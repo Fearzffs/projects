@@ -13,6 +13,7 @@ Instructions for Cursor agents working in this repository.
 - Top-level numbered folders: `01-ring-buffer`, `02-…`
 - Each project is self-contained: `README.md`, `CMakeLists.txt`, `include/` or `src/`, `tests/`
 - Prefer extending the current project over creating shared frameworks early
+- Next projects and order: [`docs/BACKLOG.md`](docs/BACKLOG.md) — do not invent or reorder unless the human asks
 
 ## Build & test
 
