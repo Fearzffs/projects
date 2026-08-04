@@ -42,6 +42,14 @@ cmake --build 03-thread-pool/build -j"$(nproc)"
 ctest --test-dir 03-thread-pool/build --output-on-failure
 ```
 
+### 04 — event bus
+
+```bash
+cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 04-event-bus/build -j"$(nproc)"
+ctest --test-dir 04-event-bus/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

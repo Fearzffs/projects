@@ -11,6 +11,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | [`01-ring-buffer`](01-ring-buffer) | Mutex-synchronized fixed-capacity FIFO, C++20, GoogleTest |
 | [`02-spsc-ring-buffer`](02-spsc-ring-buffer) | Lock-free SPSC fixed-capacity FIFO, atomics, GoogleTest |
 | [`03-thread-pool`](03-thread-pool) | Fixed worker pool, non-blocking try_submit + completion callback |
+| [`04-event-bus`](04-event-bus) | Typed pub/sub; handlers dispatched via `03` thread pool |
 
 ## Conventions
 
