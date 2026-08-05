@@ -59,3 +59,14 @@ jobs:
         run: cmake --build 05-async-logger/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 05-async-logger/build --output-on-failure
+
+  timer-scheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 06-timer-scheduler -B 06-timer-scheduler/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 06-timer-scheduler/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 06-timer-scheduler/build --output-on-failure

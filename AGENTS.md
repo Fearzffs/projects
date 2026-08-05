@@ -59,6 +59,14 @@ cmake --build 05-async-logger/build -j"$(nproc)"
 ctest --test-dir 05-async-logger/build --output-on-failure
 ```
 
+### 06 — timer scheduler
+
+```bash
+cmake -S 06-timer-scheduler -B 06-timer-scheduler/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 06-timer-scheduler/build -j"$(nproc)"
+ctest --test-dir 06-timer-scheduler/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive
