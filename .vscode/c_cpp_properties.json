@@ -9,12 +9,14 @@
         "${workspaceFolder}/04-event-bus/include",
         "${workspaceFolder}/05-async-logger/include",
         "${workspaceFolder}/06-timer-scheduler/include",
+        "${workspaceFolder}/07-arena-allocator/include",
         "${workspaceFolder}/01-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/02-spsc-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/03-thread-pool/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/04-event-bus/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/05-async-logger/build/_deps/googletest-src/googletest/include",
-        "${workspaceFolder}/06-timer-scheduler/build/_deps/googletest-src/googletest/include"
+        "${workspaceFolder}/06-timer-scheduler/build/_deps/googletest-src/googletest/include",
+        "${workspaceFolder}/07-arena-allocator/build/_deps/googletest-src/googletest/include"
       ],
       "browse": {
         "path": [
@@ -23,7 +25,8 @@
           "${workspaceFolder}/03-thread-pool/include",
           "${workspaceFolder}/04-event-bus/include",
           "${workspaceFolder}/05-async-logger/include",
-          "${workspaceFolder}/06-timer-scheduler/include"
+          "${workspaceFolder}/06-timer-scheduler/include",
+          "${workspaceFolder}/07-arena-allocator/include"
         ],
         "limitSymbolsToIncludedHeaders": false
       },
@@ -32,7 +35,7 @@
       "cStandard": "c17",
       "cppStandard": "c++20",
       "intelliSenseMode": "linux-gcc-x64",
-      "compileCommands": "${workspaceFolder}/06-timer-scheduler/compile_commands.json"
+      "compileCommands": "${workspaceFolder}/07-arena-allocator/compile_commands.json"
     }
   ],
   "version": 4

@@ -1,13 +1,13 @@
-# Helps clangd resolve cross-folder headers (03 thread pool) when editing 06.
-# Prefer the source-tree CDB (written by 06's CMakeLists); it is not overwritten
-# with googletest _deps entries on every cmake configure.
+# Helps clangd when editing 07. Prefer the source-tree CDB (written by CMake);
+# it is not overwritten with googletest _deps entries on every configure.
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I07-arena-allocator/include
     - -I06-timer-scheduler/include
     - -I05-async-logger/include
     - -I04-event-bus/include
     - -I03-thread-pool/include
     - -I02-spsc-ring-buffer/include
     - -I01-ring-buffer/include
-  CompilationDatabase: 06-timer-scheduler
+  CompilationDatabase: 07-arena-allocator

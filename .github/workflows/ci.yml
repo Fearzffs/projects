@@ -70,3 +70,14 @@ jobs:
         run: cmake --build 06-timer-scheduler/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 06-timer-scheduler/build --output-on-failure
+
+  arena-allocator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 07-arena-allocator -B 07-arena-allocator/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 07-arena-allocator/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 07-arena-allocator/build --output-on-failure

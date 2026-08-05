@@ -67,6 +67,14 @@ cmake --build 06-timer-scheduler/build -j"$(nproc)"
 ctest --test-dir 06-timer-scheduler/build --output-on-failure
 ```
 
+### 07 — arena allocator
+
+```bash
+cmake -S 07-arena-allocator -B 07-arena-allocator/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 07-arena-allocator/build -j"$(nproc)"
+ctest --test-dir 07-arena-allocator/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

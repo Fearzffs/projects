@@ -1,8 +1,8 @@
 {
-  // Ctrl+Shift+B → default "build" task (timer scheduler).
+  // Ctrl+Shift+B → default "build" task (arena allocator).
   // Ctrl+Shift+P → "Tasks: Run Test Task" → default "test" task.
   "task.quickOpen.detail": true,
-  "C_Cpp.default.compileCommands": "${workspaceFolder}/06-timer-scheduler/compile_commands.json",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/07-arena-allocator/compile_commands.json",
   "C_Cpp.default.cppStandard": "c++20",
   "C_Cpp.default.compilerPath": "/usr/bin/g++",
   "C_Cpp.default.includePath": [
@@ -11,10 +11,11 @@
     "${workspaceFolder}/03-thread-pool/include",
     "${workspaceFolder}/04-event-bus/include",
     "${workspaceFolder}/05-async-logger/include",
-    "${workspaceFolder}/06-timer-scheduler/include"
+    "${workspaceFolder}/06-timer-scheduler/include",
+    "${workspaceFolder}/07-arena-allocator/include"
   ],
   "clangd.arguments": [
-    "--compile-commands-dir=${workspaceFolder}/06-timer-scheduler"
+    "--compile-commands-dir=${workspaceFolder}/07-arena-allocator"
   ],
   "files.eol": "\n"
 }
