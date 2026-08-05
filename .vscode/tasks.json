@@ -3,9 +3,9 @@
   "tasks": [
     {
       "label": "build",
-      "detail": "Configure (if needed) and build event_bus_tests",
+      "detail": "Configure (if needed) and build async_logger_tests",
       "type": "shell",
-      "command": "cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\"",
+      "command": "cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 05-async-logger/build -j\"$(nproc)\"",
       "windows": {
         "options": {
           "shell": {
@@ -13,7 +13,7 @@
             "args": ["-e", "bash", "-lc"]
           }
         },
-        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\""
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 05-async-logger/build -j\"$(nproc)\""
       },
       "group": {
         "kind": "build",
@@ -28,6 +28,86 @@
     },
     {
       "label": "test",
+      "detail": "Build then run ctest for async logger",
+      "type": "shell",
+      "command": "cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 05-async-logger/build -j\"$(nproc)\" && cd 05-async-logger/build && ctest --output-on-failure",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 05-async-logger/build -j\"$(nproc)\" && cd 05-async-logger/build && ctest --output-on-failure"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "CMake: configure async-logger (Debug)",
+      "type": "shell",
+      "command": "cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build async-logger tests",
+      "type": "shell",
+      "command": "cmake --build 05-async-logger/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake --build 05-async-logger/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure async-logger (Debug)"
+    },
+    {
+      "label": "build event-bus",
+      "detail": "Configure (if needed) and build event_bus_tests",
+      "type": "shell",
+      "command": "cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "test event-bus",
       "detail": "Build then run ctest for event bus",
       "type": "shell",
       "command": "cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\" && cd 04-event-bus/build && ctest --output-on-failure",
@@ -40,10 +120,7 @@
         },
         "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 04-event-bus -B 04-event-bus/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 04-event-bus/build -j\"$(nproc)\" && cd 04-event-bus/build && ctest --output-on-failure"
       },
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
+      "group": "test",
       "problemMatcher": ["$gcc"],
       "presentation": {
         "reveal": "always",

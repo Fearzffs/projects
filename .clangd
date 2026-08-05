@@ -1,11 +1,10 @@
-# Helps clangd resolve cross-folder headers (03 thread pool) when editing 04.
-# Note: clangd often matches headers to the wrong CDB entry (e.g. googlemock);
-# CompileFlags.Add is merged onto whatever command is chosen.
+# Helps clangd resolve cross-folder headers (02 SPSC) when editing 05.
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I05-async-logger/include
     - -I04-event-bus/include
     - -I03-thread-pool/include
     - -I02-spsc-ring-buffer/include
     - -I01-ring-buffer/include
-  CompilationDatabase: 04-event-bus/build
+  CompilationDatabase: 05-async-logger/build

@@ -48,3 +48,14 @@ jobs:
         run: cmake --build 04-event-bus/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 04-event-bus/build --output-on-failure
+
+  async-logger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 05-async-logger/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 05-async-logger/build --output-on-failure

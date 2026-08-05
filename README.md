@@ -12,6 +12,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | [`02-spsc-ring-buffer`](02-spsc-ring-buffer) | Lock-free SPSC fixed-capacity FIFO, atomics, GoogleTest |
 | [`03-thread-pool`](03-thread-pool) | Fixed worker pool, non-blocking try_submit + completion callback |
 | [`04-event-bus`](04-event-bus) | Typed pub/sub; handlers dispatched via `03` thread pool |
+| [`05-async-logger`](05-async-logger) | Non-blocking logger on `02` SPSC; dedicated writer thread |
 
 ## Conventions
 
@@ -28,7 +29,7 @@ See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
 
 ## Backlog
 
-Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next: **`05-async-logger`**.
+Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next: **timer / scheduler**.
 
 ## Agent workflow
 

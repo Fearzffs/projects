@@ -6,6 +6,6 @@ alwaysApply: true
 # Backlog
 
 - Canonical order: [`docs/BACKLOG.md`](docs/BACKLOG.md).
-- Next project: **`05-async-logger`** (uses `02-spsc-ring-buffer`).
+- Next project: **timer / scheduler** (after `05-async-logger`).
 - Do not invent new portfolio folders or reorder the backlog unless the human asks.
 - Do not retrofit logger into `01`–`04`; keep primitives clean.

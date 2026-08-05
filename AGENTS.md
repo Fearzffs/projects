@@ -51,6 +51,14 @@ cmake --build 04-event-bus/build -j"$(nproc)"
 ctest --test-dir 04-event-bus/build --output-on-failure
 ```
 
+### 05 — async logger
+
+```bash
+cmake -S 05-async-logger -B 05-async-logger/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 05-async-logger/build -j"$(nproc)"
+ctest --test-dir 05-async-logger/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive
