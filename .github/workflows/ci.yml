@@ -81,3 +81,14 @@ jobs:
         run: cmake --build 07-arena-allocator/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 07-arena-allocator/build --output-on-failure
+
+  blocking-mpmc-queue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 08-blocking-mpmc-queue/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 08-blocking-mpmc-queue/build --output-on-failure

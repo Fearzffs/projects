@@ -6,7 +6,7 @@ alwaysApply: true
 # Backlog
 
 - Canonical order: [`docs/BACKLOG.md`](docs/BACKLOG.md).
-- Next project: **blocking MPMC queue** (after `07-arena-allocator`).
+- Next project: **lite task graph** (after `08-blocking-mpmc-queue`).
 - Before showcase: include a **signal / slot** project (distinct from `04` event bus).
 - Do not invent new portfolio folders or reorder the backlog unless the human asks.
 - Do not retrofit logger into `01`–`04`; keep primitives clean.

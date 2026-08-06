@@ -76,6 +76,14 @@ cmake --build 07-arena-allocator/build -j"$(nproc)"
 ctest --test-dir 07-arena-allocator/build --output-on-failure
 ```
 
+### 08 — blocking MPMC queue
+
+```bash
+cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 08-blocking-mpmc-queue/build -j"$(nproc)"
+ctest --test-dir 08-blocking-mpmc-queue/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

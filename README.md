@@ -15,6 +15,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | [`05-async-logger`](05-async-logger) | Non-blocking logger on `02` SPSC; dedicated writer thread |
 | [`06-timer-scheduler`](06-timer-scheduler) | `try_run_after` / `try_run_every`; fires via `03` thread pool |
 | [`07-arena-allocator`](07-arena-allocator) | Bump arena: fast allocate, bulk reset, no per-block free |
+| [`08-blocking-mpmc-queue`](08-blocking-mpmc-queue) | Bounded MPMC with CV back-pressure (`push`/`pop` wait) |
 
 ## Conventions
 
@@ -31,7 +32,7 @@ See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
 
 ## Backlog
 
-Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next after `07`: **blocking MPMC queue**.
+Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next after `08`: **lite task graph**.
 
 ## Agent workflow
 
