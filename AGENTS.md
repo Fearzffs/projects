@@ -14,6 +14,7 @@ Instructions for Cursor agents working in this repository.
 - Each project is self-contained: `README.md`, `CMakeLists.txt`, `include/` or `src/`, `tests/`
 - Prefer extending the current project over creating shared frameworks early
 - Next projects and order: [`docs/BACKLOG.md`](docs/BACKLOG.md) — do not invent or reorder unless the human asks
+- Morning gap drills / scores: [`docs/LEARNING.md`](docs/LEARNING.md) — short quiz, update the table, then build
 
 ## Build & test
 
