@@ -15,6 +15,7 @@ Instructions for Cursor agents working in this repository.
 - Prefer extending the current project over creating shared frameworks early
 - Next projects and order: [`docs/BACKLOG.md`](docs/BACKLOG.md) — do not invent or reorder unless the human asks
 - Morning gap drills / scores: [`docs/LEARNING.md`](docs/LEARNING.md) — short quiz, update the table, then build
+- IntelliSense: workspace-root `compile_commands.json` via [`scripts/generate_compile_commands.py`](scripts/generate_compile_commands.py) (auto-run from [`cmake/PortfolioIde.cmake`](cmake/PortfolioIde.cmake) on every project configure). Prefer the **clangd** extension; cpptools IntelliSense is disabled in `.vscode/settings.json`. When adding a cross-folder dependency, update `IDE_DEPS` in the generator script. After scaffolding a new `NN-*` project: configure once (or run the script), then **Clangd: Restart language server**.
 
 ## Build & test
 

@@ -18,27 +18,4 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 
-# Stable IDE compilation database in the source tree. CMake rewrites
-# ${CMAKE_BINARY_DIR}/compile_commands.json on every configure (including
-# googletest _deps TUs); clangd often attaches arena.hpp to a googlemock TU
-# without -I for this project. A source-tree CDB is not overwritten by generate.
-set(_gtest_include "${CMAKE_BINARY_DIR}/_deps/googletest-src/googletest/include")
-set(_ide_compile_commands "${CMAKE_CURRENT_SOURCE_DIR}/compile_commands.json")
-file(WRITE "${_ide_compile_commands}" "[
-  {
-    \"directory\": \"${CMAKE_CURRENT_BINARY_DIR}/tests\",
-    \"command\": \"/usr/bin/g++ -I${CMAKE_CURRENT_SOURCE_DIR}/include -isystem ${_gtest_include} -std=c++2a -c ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_arena.cpp\",
-    \"file\": \"${CMAKE_CURRENT_SOURCE_DIR}/tests/test_arena.cpp\"
-  }
-]
-")
-
-# Also keep build/compile_commands.json filtered after each build.
-add_custom_target(filter_compile_commands ALL
-    COMMAND ${CMAKE_COMMAND}
-        -DCOMPILE_COMMANDS_IN=${CMAKE_BINARY_DIR}/compile_commands.json
-        -DCOMPILE_COMMANDS_OUT=${CMAKE_BINARY_DIR}/compile_commands.json
-        -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/filter_compile_commands.cmake
-    COMMENT "Filtering compile_commands.json for IDE (drop _deps)"
-    VERBATIM
-)
+include("${CMAKE_CURRENT_SOURCE_DIR}/../cmake/PortfolioIde.cmake")

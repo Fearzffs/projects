@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "llvm-vs-code-extensions.vscode-clangd",
     "anysphere.cpptools",
     "vadimcn.vscode-lldb"
   ]

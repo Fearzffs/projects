@@ -10,3 +10,4 @@ alwaysApply: true
 - Public headers live under `include/`; keep READMEs short and decision-focused.
 - After implementation changes, run the project’s CMake configure/build/`ctest` loop from `AGENTS.md`.
 - Do not change public APIs without explicit user approval.
+- IntelliSense: new `NN-*` projects are picked up by `scripts/generate_compile_commands.py` (via `cmake/PortfolioIde.cmake`). If the new project depends on another folder, add it to `IDE_DEPS` in that script. Do not hand-edit per-test include hacks.

@@ -1,7 +1,9 @@
 {
   // Ctrl+Shift+B → default "build" task (blocking MPMC).
+  // IntelliSense: clangd + workspace-root compile_commands.json (all projects/tests).
   "task.quickOpen.detail": true,
-  "C_Cpp.default.compileCommands": "${workspaceFolder}/08-blocking-mpmc-queue/compile_commands.json",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/compile_commands.json",
   "C_Cpp.default.cppStandard": "c++20",
   "C_Cpp.default.compilerPath": "/usr/bin/g++",
   "C_Cpp.default.includePath": [
@@ -15,7 +17,8 @@
     "${workspaceFolder}/08-blocking-mpmc-queue/include"
   ],
   "clangd.arguments": [
-    "--compile-commands-dir=${workspaceFolder}/08-blocking-mpmc-queue"
+    "--compile-commands-dir=${workspaceFolder}",
+    "--background-index"
   ],
   "files.eol": "\n"
 }

@@ -17,3 +17,5 @@ include(CTest)
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
+
+include("${CMAKE_CURRENT_SOURCE_DIR}/../cmake/PortfolioIde.cmake")

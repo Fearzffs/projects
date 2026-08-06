@@ -1,5 +1,5 @@
-# Prefer the source-tree CDB (written by 08's CMakeLists); it is not overwritten
-# with googletest _deps entries on every cmake configure.
+# Generated/updated by scripts/generate_compile_commands.py — do not hand-edit -I list.
+# CompilationDatabase covers tests/; CompileFlags.Add helps when editing headers.
 CompileFlags:
   Add:
     - -std=c++2a
@@ -11,4 +11,4 @@ CompileFlags:
     - -I03-thread-pool/include
     - -I02-spsc-ring-buffer/include
     - -I01-ring-buffer/include
-  CompilationDatabase: 08-blocking-mpmc-queue
+  CompilationDatabase: .

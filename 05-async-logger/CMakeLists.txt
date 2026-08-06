@@ -31,14 +31,4 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 
-# Drop _deps (gtest) entries from compile_commands.json. Otherwise clangd often
-# attaches async_logger.hpp to a googlemock TU and reports
-# 'spsc_ring_buffer/spsc_ring_buffer.hpp' file not found (no -I for 02).
-add_custom_target(filter_compile_commands ALL
-    COMMAND ${CMAKE_COMMAND}
-        -DCOMPILE_COMMANDS_IN=${CMAKE_BINARY_DIR}/compile_commands.json
-        -DCOMPILE_COMMANDS_OUT=${CMAKE_BINARY_DIR}/compile_commands.json
-        -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/filter_compile_commands.cmake
-    COMMENT "Filtering compile_commands.json for IDE (drop _deps)"
-    VERBATIM
-)
+include("${CMAKE_CURRENT_SOURCE_DIR}/../cmake/PortfolioIde.cmake")
