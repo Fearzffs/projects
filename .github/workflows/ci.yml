@@ -92,3 +92,14 @@ jobs:
         run: cmake --build 08-blocking-mpmc-queue/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 08-blocking-mpmc-queue/build --output-on-failure
+
+  task-graph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 09-task-graph/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 09-task-graph/build --output-on-failure
