@@ -11,6 +11,7 @@
         "${workspaceFolder}/06-timer-scheduler/include",
         "${workspaceFolder}/07-arena-allocator/include",
         "${workspaceFolder}/08-blocking-mpmc-queue/include",
+        "${workspaceFolder}/09-task-graph/include",
         "${workspaceFolder}/01-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/02-spsc-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/03-thread-pool/build/_deps/googletest-src/googletest/include",
@@ -18,7 +19,8 @@
         "${workspaceFolder}/05-async-logger/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/06-timer-scheduler/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/07-arena-allocator/build/_deps/googletest-src/googletest/include",
-        "${workspaceFolder}/08-blocking-mpmc-queue/build/_deps/googletest-src/googletest/include"
+        "${workspaceFolder}/08-blocking-mpmc-queue/build/_deps/googletest-src/googletest/include",
+        "${workspaceFolder}/09-task-graph/build/_deps/googletest-src/googletest/include"
       ],
       "browse": {
         "path": [
@@ -29,7 +31,8 @@
           "${workspaceFolder}/05-async-logger/include",
           "${workspaceFolder}/06-timer-scheduler/include",
           "${workspaceFolder}/07-arena-allocator/include",
-          "${workspaceFolder}/08-blocking-mpmc-queue/include"
+          "${workspaceFolder}/08-blocking-mpmc-queue/include",
+          "${workspaceFolder}/09-task-graph/include"
         ],
         "limitSymbolsToIncludedHeaders": false
       },

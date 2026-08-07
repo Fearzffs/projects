@@ -3,9 +3,9 @@
   "tasks": [
     {
       "label": "build",
-      "detail": "Configure (if needed) and build blocking_mpmc_queue_tests",
+      "detail": "Configure (if needed) and build task_graph_tests",
       "type": "shell",
-      "command": "cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\"",
+      "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\"",
       "windows": {
         "options": {
           "shell": {
@@ -13,7 +13,7 @@
             "args": ["-e", "bash", "-lc"]
           }
         },
-        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\""
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\""
       },
       "group": {
         "kind": "build",
@@ -28,6 +28,86 @@
     },
     {
       "label": "test",
+      "detail": "Build then run ctest for task graph",
+      "type": "shell",
+      "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\" && cd 09-task-graph/build && ctest --output-on-failure",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\" && cd 09-task-graph/build && ctest --output-on-failure"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "CMake: configure task-graph (Debug)",
+      "type": "shell",
+      "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build task-graph tests",
+      "type": "shell",
+      "command": "cmake --build 09-task-graph/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake --build 09-task-graph/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure task-graph (Debug)"
+    },
+    {
+      "label": "build blocking-mpmc-queue",
+      "detail": "Configure (if needed) and build blocking_mpmc_queue_tests",
+      "type": "shell",
+      "command": "cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "test blocking-mpmc-queue",
       "detail": "Build then run ctest for blocking MPMC queue",
       "type": "shell",
       "command": "cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\" && cd 08-blocking-mpmc-queue/build && ctest --output-on-failure",
@@ -40,10 +120,7 @@
         },
         "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 08-blocking-mpmc-queue/build -j\"$(nproc)\" && cd 08-blocking-mpmc-queue/build && ctest --output-on-failure"
       },
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
+      "group": "test",
       "problemMatcher": ["$gcc"],
       "presentation": {
         "reveal": "always",

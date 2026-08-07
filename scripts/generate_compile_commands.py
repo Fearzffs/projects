@@ -18,6 +18,7 @@ IDE_DEPS = {
     "04-event-bus": ["03-thread-pool"],
     "05-async-logger": ["02-spsc-ring-buffer"],
     "06-timer-scheduler": ["03-thread-pool"],
+    "09-task-graph": ["03-thread-pool"],
 }
 
 

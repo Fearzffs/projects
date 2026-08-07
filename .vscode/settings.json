@@ -1,5 +1,5 @@
 {
-  // Ctrl+Shift+B → default "build" task (blocking MPMC).
+  // Ctrl+Shift+B → default "build" task (task graph).
   // IntelliSense: clangd + workspace-root compile_commands.json (all projects/tests).
   "task.quickOpen.detail": true,
   "C_Cpp.intelliSenseEngine": "disabled",
@@ -14,7 +14,8 @@
     "${workspaceFolder}/05-async-logger/include",
     "${workspaceFolder}/06-timer-scheduler/include",
     "${workspaceFolder}/07-arena-allocator/include",
-    "${workspaceFolder}/08-blocking-mpmc-queue/include"
+    "${workspaceFolder}/08-blocking-mpmc-queue/include",
+    "${workspaceFolder}/09-task-graph/include"
   ],
   "clangd.arguments": [
     "--compile-commands-dir=${workspaceFolder}",

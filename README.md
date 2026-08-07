@@ -16,6 +16,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | [`06-timer-scheduler`](06-timer-scheduler) | `try_run_after` / `try_run_every`; fires via `03` thread pool |
 | [`07-arena-allocator`](07-arena-allocator) | Bump arena: fast allocate, bulk reset, no per-block free |
 | [`08-blocking-mpmc-queue`](08-blocking-mpmc-queue) | Bounded MPMC with CV back-pressure (`push`/`pop` wait) |
+| [`09-task-graph`](09-task-graph) | Lite task DAG on `03` pool (`precede` / `try_run`) |
 
 ## Conventions
 
@@ -32,7 +33,7 @@ See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
 
 ## Backlog
 
-Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next after `08`: **lite task graph**.
+Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next after `09`: **signal / slot**.
 
 ## Agent workflow
 

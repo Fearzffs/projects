@@ -85,6 +85,14 @@ cmake --build 08-blocking-mpmc-queue/build -j"$(nproc)"
 ctest --test-dir 08-blocking-mpmc-queue/build --output-on-failure
 ```
 
+### 09 — task graph
+
+```bash
+cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 09-task-graph/build -j"$(nproc)"
+ctest --test-dir 09-task-graph/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

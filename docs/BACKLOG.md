@@ -14,12 +14,12 @@ Ordered next projects. Do not invent new folders or reorder unless the human ask
 | `06-timer-scheduler` | try_run_after / try_run_every via thread pool |
 | `07-arena-allocator` | Bump arena allocate + reset |
 | `08-blocking-mpmc-queue` | Bounded MPMC; CV back-pressure |
+| `09-task-graph` | Lite DAG on thread pool; `precede` + `try_run` |
 
 ## Remaining (in order)
 
-1. **Lite task graph** — “B after A” dependencies on the thread pool.
-2. **Signal / slot system** — Connect/emit distinct from `04` event bus (before showcase).
-3. **Showcase demo app** — Glue pool + bus + logger + timer (and later pieces) without modifying earlier public APIs.
+1. **Signal / slot system** — Connect/emit distinct from `04` event bus (before showcase).
+2. **Showcase demo app** — Glue pool + bus + logger + timer (and later pieces) without modifying earlier public APIs.
 
 ## Standing decisions
 

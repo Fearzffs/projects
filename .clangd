@@ -3,6 +3,7 @@
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I09-task-graph/include
     - -I08-blocking-mpmc-queue/include
     - -I07-arena-allocator/include
     - -I06-timer-scheduler/include

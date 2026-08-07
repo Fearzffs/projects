@@ -2,6 +2,77 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug task_graph_tests (all)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/09-task-graph/build/tests/task_graph_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build task-graph tests"
+    },
+    {
+      "name": "Debug task_graph_tests (one test)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/09-task-graph/build/tests/task_graph_tests",
+      "args": [
+        "--gtest_filter=${input:taskGraphGtestFilter}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build task-graph tests"
+    },
+    {
+      "name": "CodeLLDB: task_graph_tests (all)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/09-task-graph/build/tests/task_graph_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "CMake: build task-graph tests"
+    },
+    {
       "name": "Debug blocking_mpmc_queue_tests (all)",
       "type": "cppdbg",
       "request": "launch",
@@ -667,6 +738,12 @@
     }
   ],
   "inputs": [
+    {
+      "id": "taskGraphGtestFilter",
+      "type": "promptString",
+      "description": "GoogleTest filter (suite.testcase)",
+      "default": "TaskGraph.DiamondDependencies"
+    },
     {
       "id": "blockingMpmcGtestFilter",
       "type": "promptString",
