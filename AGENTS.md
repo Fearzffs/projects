@@ -101,6 +101,14 @@ cmake --build 10-signal-slot/build -j"$(nproc)"
 ctest --test-dir 10-signal-slot/build --output-on-failure
 ```
 
+### 11 — FSM
+
+```bash
+cmake -S 11-fsm -B 11-fsm/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 11-fsm/build -j"$(nproc)"
+ctest --test-dir 11-fsm/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

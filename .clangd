@@ -3,6 +3,7 @@
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I11-fsm/include
     - -I10-signal-slot/include
     - -I09-task-graph/include
     - -I08-blocking-mpmc-queue/include

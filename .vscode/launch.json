@@ -2,6 +2,77 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug fsm_tests (all)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/11-fsm/build/tests/fsm_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build fsm tests"
+    },
+    {
+      "name": "Debug fsm_tests (one test)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/11-fsm/build/tests/fsm_tests",
+      "args": [
+        "--gtest_filter=${input:fsmGtestFilter}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build fsm tests"
+    },
+    {
+      "name": "CodeLLDB: fsm_tests (all)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/11-fsm/build/tests/fsm_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "CMake: build fsm tests"
+    },
+    {
       "name": "Debug signal_slot_tests (all)",
       "type": "cppdbg",
       "request": "launch",
@@ -809,6 +880,12 @@
     }
   ],
   "inputs": [
+    {
+      "id": "fsmGtestFilter",
+      "type": "promptString",
+      "description": "GoogleTest filter (suite.testcase)",
+      "default": "Fsm.TransitionRunsExitThenEnter"
+    },
     {
       "id": "signalSlotGtestFilter",
       "type": "promptString",

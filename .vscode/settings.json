@@ -1,5 +1,5 @@
 {
-  // Ctrl+Shift+B → default "build" task (signal/slot).
+  // Ctrl+Shift+B → default "build" task (FSM).
   // IntelliSense: clangd + workspace-root compile_commands.json (all projects/tests).
   "task.quickOpen.detail": true,
   "C_Cpp.intelliSenseEngine": "disabled",
@@ -16,7 +16,8 @@
     "${workspaceFolder}/07-arena-allocator/include",
     "${workspaceFolder}/08-blocking-mpmc-queue/include",
     "${workspaceFolder}/09-task-graph/include",
-    "${workspaceFolder}/10-signal-slot/include"
+    "${workspaceFolder}/10-signal-slot/include",
+    "${workspaceFolder}/11-fsm/include"
   ],
   "clangd.arguments": [
     "--compile-commands-dir=${workspaceFolder}",

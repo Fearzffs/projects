@@ -114,3 +114,14 @@ jobs:
         run: cmake --build 10-signal-slot/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 10-signal-slot/build --output-on-failure
+
+  fsm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 11-fsm -B 11-fsm/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 11-fsm/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 11-fsm/build --output-on-failure

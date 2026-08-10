@@ -16,10 +16,11 @@ Ordered next projects. Do not invent new folders or reorder unless the human ask
 | `08-blocking-mpmc-queue` | Bounded MPMC; CV back-pressure |
 | `09-task-graph` | Lite DAG on thread pool; `precede` + `try_run` |
 | `10-signal-slot` | Sync Signal/Slot; member binds; RAII Connection |
+| `11-fsm` | Flat FSM; transitions + enter/exit; sync `handle` |
 
 ## Remaining (in order)
 
-1. **Showcase demo app** — Glue pool + bus + logger + timer (and later pieces) without modifying earlier public APIs.
+1. **Showcase demo app** — FSM-driven session that glues pool + bus + logger + timer + graph + signals (and FSM) without modifying earlier public APIs.
 
 ## Standing decisions
 
@@ -27,3 +28,4 @@ Ordered next projects. Do not invent new folders or reorder unless the human ask
 - Thread pool / logger / timer: create at app start, shut down at app end.
 - Keep primitives clean; composition belongs in a later showcase, not inside earlier folders.
 - Signal/slot must teach something different from `04` (e.g. sync emit, member binds) — not a clone of the event bus.
+- FSM stays flat (no hierarchical / concurrent regions); showcase owns the story, FSM owns the state table.
