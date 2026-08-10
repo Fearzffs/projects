@@ -16,7 +16,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 namespace detail {
 
 struct TimerSchedulerState {
@@ -279,4 +279,4 @@ private:
     std::thread worker_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

@@ -30,8 +30,8 @@ cd 04-event-bus/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::ThreadPool pool(4);
-portfolio::EventBus bus(pool);  // pool must outlive bus
+klib::ThreadPool pool(4);
+klib::EventBus bus(pool);  // pool must outlive bus
 
 struct PlayerDied { int id; };
 

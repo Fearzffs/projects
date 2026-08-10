@@ -15,7 +15,7 @@
 #include <thread>
 #include <utility>
 
-namespace portfolio {
+namespace klib {
 
 enum class LogLevel { debug, info, warn, error };
 
@@ -158,4 +158,4 @@ private:
     std::thread worker_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

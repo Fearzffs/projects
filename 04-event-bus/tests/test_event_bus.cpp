@@ -8,8 +8,8 @@
 
 #include <gtest/gtest.h>
 
-using portfolio::EventBus;
-using portfolio::ThreadPool;
+using klib::EventBus;
+using klib::ThreadPool;
 
 namespace {
 
@@ -141,7 +141,7 @@ TEST(EventBus, ConcurrentSubscribeAndPublish) {
     ThreadPool pool(4, /*max_queue_size=*/4096);
     EventBus bus(pool);
     std::atomic<int> hits{0};
-    std::vector<portfolio::Subscription> subs;
+    std::vector<klib::Subscription> subs;
     subs.reserve(8);
 
     for (int i = 0; i < 8; ++i) {

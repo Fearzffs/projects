@@ -32,15 +32,15 @@ cd 05-async-logger/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::AsyncLogger logger(1024);  // default: console_sink()
+klib::AsyncLogger logger(1024);  // default: console_sink()
 
-logger.try_log(portfolio::LogLevel::info, "ready");
+logger.try_log(klib::LogLevel::info, "ready");
 
 // file output (one handle for the logger lifetime):
-portfolio::AsyncLogger to_disk(1024, portfolio::AsyncLogger::file_sink("app.log"));
+klib::AsyncLogger to_disk(1024, klib::AsyncLogger::file_sink("app.log"));
 
 // tests / custom output:
-portfolio::AsyncLogger custom(64, [](portfolio::LogLevel level, std::string_view msg) {
+klib::AsyncLogger custom(64, [](klib::LogLevel level, std::string_view msg) {
     // ...
 });
 

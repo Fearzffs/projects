@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 
 /// Fixed-capacity FIFO ring buffer with mutex synchronization.
 ///
@@ -157,4 +157,4 @@ private:
     std::vector<T> buffer_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

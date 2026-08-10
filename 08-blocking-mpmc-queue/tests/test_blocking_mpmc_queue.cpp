@@ -11,7 +11,7 @@
 using namespace std::chrono_literals;
 
 TEST(BlockingMpmcQueue, PushPopOne) {
-    portfolio::BlockingMpmcQueue<int> q(4);
+    klib::BlockingMpmcQueue<int> q(4);
     ASSERT_TRUE(q.push(7));
     auto v = q.pop();
     ASSERT_TRUE(v.has_value());
@@ -19,7 +19,7 @@ TEST(BlockingMpmcQueue, PushPopOne) {
 }
 
 TEST(BlockingMpmcQueue, TryPushFailsWhenFull) {
-    portfolio::BlockingMpmcQueue<int> q(2);
+    klib::BlockingMpmcQueue<int> q(2);
     ASSERT_TRUE(q.try_push(1));
     ASSERT_TRUE(q.try_push(2));
     EXPECT_FALSE(q.try_push(3));
@@ -27,12 +27,12 @@ TEST(BlockingMpmcQueue, TryPushFailsWhenFull) {
 }
 
 TEST(BlockingMpmcQueue, TryPopFailsWhenEmpty) {
-    portfolio::BlockingMpmcQueue<int> q(2);
+    klib::BlockingMpmcQueue<int> q(2);
     EXPECT_FALSE(q.try_pop().has_value());
 }
 
 TEST(BlockingMpmcQueue, PushBlocksUntilSpace) {
-    portfolio::BlockingMpmcQueue<int> q(1);
+    klib::BlockingMpmcQueue<int> q(1);
     ASSERT_TRUE(q.push(1));
 
     std::atomic<bool> pushed{false};
@@ -56,7 +56,7 @@ TEST(BlockingMpmcQueue, PushBlocksUntilSpace) {
 }
 
 TEST(BlockingMpmcQueue, PopBlocksUntilItem) {
-    portfolio::BlockingMpmcQueue<int> q(2);
+    klib::BlockingMpmcQueue<int> q(2);
     std::atomic<bool> got{false};
     std::optional<int> value;
 
@@ -76,7 +76,7 @@ TEST(BlockingMpmcQueue, PopBlocksUntilItem) {
 }
 
 TEST(BlockingMpmcQueue, ShutdownUnblocksPushAndRejects) {
-    portfolio::BlockingMpmcQueue<int> q(1);
+    klib::BlockingMpmcQueue<int> q(1);
     ASSERT_TRUE(q.push(1));
 
     std::atomic<bool> done{false};
@@ -95,7 +95,7 @@ TEST(BlockingMpmcQueue, ShutdownUnblocksPushAndRejects) {
 }
 
 TEST(BlockingMpmcQueue, ShutdownUnblocksPopWhenEmpty) {
-    portfolio::BlockingMpmcQueue<int> q(2);
+    klib::BlockingMpmcQueue<int> q(2);
     std::optional<int> value;
     std::thread consumer([&] { value = q.pop(); });
 
@@ -110,7 +110,7 @@ TEST(BlockingMpmcQueue, ConcurrentProducersConsumers) {
     constexpr int kConsumers = 4;
     constexpr int kPerProducer = 200;
     constexpr int kTotal = kProducers * kPerProducer;
-    portfolio::BlockingMpmcQueue<int> q(32);
+    klib::BlockingMpmcQueue<int> q(32);
 
     std::atomic<int> consumed{0};
     std::atomic<long long> sum{0};
@@ -157,5 +157,5 @@ TEST(BlockingMpmcQueue, ConcurrentProducersConsumers) {
 }
 
 TEST(BlockingMpmcQueue, ZeroCapacityThrows) {
-    EXPECT_THROW(portfolio::BlockingMpmcQueue<int>(0), std::invalid_argument);
+    EXPECT_THROW(klib::BlockingMpmcQueue<int>(0), std::invalid_argument);
 }

@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(event_bus_tests test_event_bus.cpp)
 target_link_libraries(event_bus_tests
     PRIVATE
-        portfolio::event_bus
+        klib::event_bus
         GTest::gtest_main
 )
 

@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(task_graph_tests test_task_graph.cpp)
 target_link_libraries(task_graph_tests
     PRIVATE
-        portfolio::task_graph
+        klib::task_graph
         GTest::gtest_main
 )
 

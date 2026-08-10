@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 
 namespace detail {
 
@@ -114,4 +114,4 @@ private:
     std::vector<T> buffer_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

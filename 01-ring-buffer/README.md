@@ -57,12 +57,12 @@ Until then you can still build with: `Ctrl+Shift+P` → **Tasks: Run Build Task*
 ## API sketch
 
 ```cpp
-portfolio::RingBuffer<int> q(8);              // auto_overwrite == true (default)
+klib::RingBuffer<int> q(8);              // auto_overwrite == true (default)
 q.try_push(42);                               // if full, drops oldest then inserts
 auto front = q.try_pop();                     // oldest — std::optional<int>
 auto back = q.try_pop_back();                 // newest — std::optional<int>
 
-portfolio::RingBuffer<int> strict(8, false);  // reject push when full
+klib::RingBuffer<int> strict(8, false);  // reject push when full
 ```
 
 ## Decisions

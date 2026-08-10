@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(arena_allocator_tests test_arena.cpp)
 target_link_libraries(arena_allocator_tests
     PRIVATE
-        portfolio::arena_allocator
+        klib::arena_allocator
         GTest::gtest_main
 )
 

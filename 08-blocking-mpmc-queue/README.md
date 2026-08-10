@@ -31,7 +31,7 @@ cd 08-blocking-mpmc-queue/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::BlockingMpmcQueue<int> q(8);
+klib::BlockingMpmcQueue<int> q(8);
 
 q.push(1);                 // waits if full
 auto v = q.pop();          // waits if empty

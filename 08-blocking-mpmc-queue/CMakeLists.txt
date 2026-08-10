@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(blocking_mpmc_queue INTERFACE)
-add_library(portfolio::blocking_mpmc_queue ALIAS blocking_mpmc_queue)
+add_library(klib::blocking_mpmc_queue ALIAS blocking_mpmc_queue)
 target_include_directories(blocking_mpmc_queue INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>

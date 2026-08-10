@@ -37,7 +37,7 @@ cd 03-thread-pool/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::ThreadPool pool(4);  // 4 workers, default max queue 1024
+klib::ThreadPool pool(4);  // 4 workers, default max queue 1024
 
 pool.try_submit([] {
     // work runs on a worker thread

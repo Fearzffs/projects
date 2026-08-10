@@ -44,7 +44,7 @@ cd 02-spsc-ring-buffer/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::SpscRingBuffer<int> q(5);  // capacity() == 8 (rounded up to power of two)
+klib::SpscRingBuffer<int> q(5);  // capacity() == 8 (rounded up to power of two)
 q.try_push(42);                       // false if full — producer only
 auto front = q.try_pop();             // std::optional<int> — consumer only
 ```

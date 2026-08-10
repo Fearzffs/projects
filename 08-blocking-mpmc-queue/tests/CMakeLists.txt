@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(blocking_mpmc_queue_tests test_blocking_mpmc_queue.cpp)
 target_link_libraries(blocking_mpmc_queue_tests
     PRIVATE
-        portfolio::blocking_mpmc_queue
+        klib::blocking_mpmc_queue
         GTest::gtest_main
 )
 

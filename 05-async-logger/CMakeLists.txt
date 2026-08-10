@@ -7,11 +7,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Reuse 02's header-only SPSC ring buffer.
-if(NOT TARGET portfolio::spsc_ring_buffer)
+if(NOT TARGET klib::spsc_ring_buffer)
     get_filename_component(SPSC_INCLUDE
         "${CMAKE_CURRENT_SOURCE_DIR}/../02-spsc-ring-buffer/include" ABSOLUTE)
     add_library(spsc_ring_buffer INTERFACE)
-    add_library(portfolio::spsc_ring_buffer ALIAS spsc_ring_buffer)
+    add_library(klib::spsc_ring_buffer ALIAS spsc_ring_buffer)
     target_include_directories(spsc_ring_buffer INTERFACE
         $<BUILD_INTERFACE:${SPSC_INCLUDE}>
         $<INSTALL_INTERFACE:include>
@@ -19,12 +19,12 @@ if(NOT TARGET portfolio::spsc_ring_buffer)
 endif()
 
 add_library(async_logger INTERFACE)
-add_library(portfolio::async_logger ALIAS async_logger)
+add_library(klib::async_logger ALIAS async_logger)
 target_include_directories(async_logger INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(async_logger INTERFACE portfolio::spsc_ring_buffer)
+target_link_libraries(async_logger INTERFACE klib::spsc_ring_buffer)
 
 include(CTest)
 if(BUILD_TESTING)

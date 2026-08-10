@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 
-using portfolio::ThreadPool;
+using klib::ThreadPool;
 
 TEST(ThreadPool, RejectsZeroThreadCount) {
     EXPECT_THROW(ThreadPool(0), std::invalid_argument);

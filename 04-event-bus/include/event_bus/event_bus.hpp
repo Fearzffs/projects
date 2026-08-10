@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 namespace detail {
 
 struct EventBusState {
@@ -204,4 +204,4 @@ private:
     std::shared_ptr<detail::EventBusState> state_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

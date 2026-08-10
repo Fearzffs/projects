@@ -10,7 +10,7 @@
 
 #include <gtest/gtest.h>
 
-using portfolio::SpscRingBuffer;
+using klib::SpscRingBuffer;
 
 TEST(SpscRingBuffer, RejectsZeroCapacity) {
     EXPECT_THROW(SpscRingBuffer<int>(0), std::invalid_argument);

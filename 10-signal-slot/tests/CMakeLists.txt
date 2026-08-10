@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(signal_slot_tests test_signal_slot.cpp)
 target_link_libraries(signal_slot_tests
     PRIVATE
-        portfolio::signal_slot
+        klib::signal_slot
         GTest::gtest_main
 )
 

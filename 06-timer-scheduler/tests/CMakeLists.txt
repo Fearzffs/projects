@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(timer_scheduler_tests test_timer_scheduler.cpp)
 target_link_libraries(timer_scheduler_tests
     PRIVATE
-        portfolio::timer_scheduler
+        klib::timer_scheduler
         GTest::gtest_main
 )
 

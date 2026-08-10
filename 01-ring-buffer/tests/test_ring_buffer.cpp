@@ -9,7 +9,7 @@
 
 #include <gtest/gtest.h>
 
-using portfolio::RingBuffer;
+using klib::RingBuffer;
 
 TEST(RingBuffer, RejectsZeroCapacity) {
     EXPECT_THROW(RingBuffer<int>(0), std::invalid_argument);

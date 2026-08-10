@@ -6,11 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(NOT TARGET portfolio::thread_pool)
+if(NOT TARGET klib::thread_pool)
     get_filename_component(THREAD_POOL_INCLUDE
         "${CMAKE_CURRENT_SOURCE_DIR}/../03-thread-pool/include" ABSOLUTE)
     add_library(thread_pool INTERFACE)
-    add_library(portfolio::thread_pool ALIAS thread_pool)
+    add_library(klib::thread_pool ALIAS thread_pool)
     target_include_directories(thread_pool INTERFACE
         $<BUILD_INTERFACE:${THREAD_POOL_INCLUDE}>
         $<INSTALL_INTERFACE:include>
@@ -18,12 +18,12 @@ if(NOT TARGET portfolio::thread_pool)
 endif()
 
 add_library(task_graph INTERFACE)
-add_library(portfolio::task_graph ALIAS task_graph)
+add_library(klib::task_graph ALIAS task_graph)
 target_include_directories(task_graph INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(task_graph INTERFACE portfolio::thread_pool)
+target_link_libraries(task_graph INTERFACE klib::thread_pool)
 
 include(CTest)
 if(BUILD_TESTING)

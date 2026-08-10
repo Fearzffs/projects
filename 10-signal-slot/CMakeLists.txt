@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(signal_slot INTERFACE)
-add_library(portfolio::signal_slot ALIAS signal_slot)
+add_library(klib::signal_slot ALIAS signal_slot)
 target_include_directories(signal_slot INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>

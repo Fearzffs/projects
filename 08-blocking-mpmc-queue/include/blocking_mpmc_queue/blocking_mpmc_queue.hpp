@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace portfolio {
+namespace klib {
 
 /// Fixed-capacity multi-producer / multi-consumer queue with blocking back-pressure.
 ///
@@ -143,4 +143,4 @@ private:
     bool stopping_{false};
 };
 
-}  // namespace portfolio
+}  // namespace klib

@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 namespace detail {
 
 struct TaskGraphState {
@@ -282,4 +282,4 @@ private:
     std::shared_ptr<detail::TaskGraphState> state_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

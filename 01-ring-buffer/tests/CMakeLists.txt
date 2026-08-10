@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(ring_buffer_tests test_ring_buffer.cpp)
 target_link_libraries(ring_buffer_tests
     PRIVATE
-        portfolio::ring_buffer
+        klib::ring_buffer
         GTest::gtest_main
 )
 

@@ -18,13 +18,13 @@ namespace {
 struct CapturingSink {
     std::mutex mutex;
     std::condition_variable cv;
-    std::vector<std::pair<portfolio::LogLevel, std::string>> records;
+    std::vector<std::pair<klib::LogLevel, std::string>> records;
     std::atomic<bool> block_writes{false};
     std::mutex block_mutex;
     std::condition_variable block_cv;
     bool allow_write{true};
 
-    void operator()(portfolio::LogLevel level, std::string_view message) {
+    void operator()(klib::LogLevel level, std::string_view message) {
         if (block_writes.load(std::memory_order_acquire)) {
             std::unique_lock lock(block_mutex);
             block_cv.wait(lock, [this] { return allow_write; });
@@ -57,25 +57,25 @@ struct CapturingSink {
 
 TEST(AsyncLogger, TryLogDeliversThroughSink) {
     auto sink = std::make_shared<CapturingSink>();
-    portfolio::AsyncLogger logger(8, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(8, [sink](klib::LogLevel level,
                                             std::string_view msg) { (*sink)(level, msg); });
 
-    ASSERT_TRUE(logger.try_log(portfolio::LogLevel::info, "hello"));
+    ASSERT_TRUE(logger.try_log(klib::LogLevel::info, "hello"));
     sink->wait_for_count(1);
     logger.shutdown();
 
     ASSERT_EQ(sink->records.size(), 1u);
-    EXPECT_EQ(sink->records[0].first, portfolio::LogLevel::info);
+    EXPECT_EQ(sink->records[0].first, klib::LogLevel::info);
     EXPECT_EQ(sink->records[0].second, "hello");
 }
 
 TEST(AsyncLogger, ShutdownDrainsQueuedRecords) {
     auto sink = std::make_shared<CapturingSink>();
-    portfolio::AsyncLogger logger(16, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(16, [sink](klib::LogLevel level,
                                              std::string_view msg) { (*sink)(level, msg); });
 
     for (int i = 0; i < 10; ++i) {
-        ASSERT_TRUE(logger.try_log(portfolio::LogLevel::debug, std::to_string(i)));
+        ASSERT_TRUE(logger.try_log(klib::LogLevel::debug, std::to_string(i)));
     }
     logger.shutdown();
 
@@ -87,12 +87,12 @@ TEST(AsyncLogger, ShutdownDrainsQueuedRecords) {
 
 TEST(AsyncLogger, TryLogFailsAfterShutdown) {
     auto sink = std::make_shared<CapturingSink>();
-    portfolio::AsyncLogger logger(8, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(8, [sink](klib::LogLevel level,
                                             std::string_view msg) { (*sink)(level, msg); });
 
-    ASSERT_TRUE(logger.try_log(portfolio::LogLevel::warn, "before"));
+    ASSERT_TRUE(logger.try_log(klib::LogLevel::warn, "before"));
     logger.shutdown();
-    EXPECT_FALSE(logger.try_log(portfolio::LogLevel::warn, "after"));
+    EXPECT_FALSE(logger.try_log(klib::LogLevel::warn, "after"));
 }
 
 TEST(AsyncLogger, TryLogFailsWhenQueueFull) {
@@ -101,14 +101,14 @@ TEST(AsyncLogger, TryLogFailsWhenQueueFull) {
     sink->allow_write = false;
 
     // Capacity rounds up to power of two in SPSC (4 stays 4).
-    portfolio::AsyncLogger logger(4, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(4, [sink](klib::LogLevel level,
                                             std::string_view msg) { (*sink)(level, msg); });
 
     // First record may be held by the consumer waiting on the blocked sink.
     // Fill remaining slots until try_log reports full.
     std::size_t accepted = 0;
     for (int i = 0; i < 32; ++i) {
-        if (logger.try_log(portfolio::LogLevel::error, "x")) {
+        if (logger.try_log(klib::LogLevel::error, "x")) {
             ++accepted;
         } else {
             break;
@@ -116,7 +116,7 @@ TEST(AsyncLogger, TryLogFailsWhenQueueFull) {
     }
     EXPECT_GE(accepted, 1u);
     EXPECT_LE(accepted, logger.capacity() + 1);  // +1 if one is mid-sink
-    EXPECT_FALSE(logger.try_log(portfolio::LogLevel::error, "overflow"));
+    EXPECT_FALSE(logger.try_log(klib::LogLevel::error, "overflow"));
 
     sink->unblock();
     logger.shutdown();
@@ -125,12 +125,12 @@ TEST(AsyncLogger, TryLogFailsWhenQueueFull) {
 
 TEST(AsyncLogger, PreservesOrderFromSingleProducer) {
     auto sink = std::make_shared<CapturingSink>();
-    portfolio::AsyncLogger logger(64, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(64, [sink](klib::LogLevel level,
                                              std::string_view msg) { (*sink)(level, msg); });
 
     constexpr int kCount = 50;
     for (int i = 0; i < kCount; ++i) {
-        ASSERT_TRUE(logger.try_log(portfolio::LogLevel::info, std::to_string(i)));
+        ASSERT_TRUE(logger.try_log(klib::LogLevel::info, std::to_string(i)));
     }
     logger.shutdown();
 
@@ -142,7 +142,7 @@ TEST(AsyncLogger, PreservesOrderFromSingleProducer) {
 
 TEST(AsyncLogger, ConcurrentProducersDoNotCrash) {
     auto sink = std::make_shared<CapturingSink>();
-    portfolio::AsyncLogger logger(256, [sink](portfolio::LogLevel level,
+    klib::AsyncLogger logger(256, [sink](klib::LogLevel level,
                                               std::string_view msg) { (*sink)(level, msg); });
 
     constexpr int kThreads = 4;
@@ -154,7 +154,7 @@ TEST(AsyncLogger, ConcurrentProducersDoNotCrash) {
     for (int t = 0; t < kThreads; ++t) {
         threads.emplace_back([&logger, &accepted, t] {
             for (int i = 0; i < kPerThread; ++i) {
-                if (logger.try_log(portfolio::LogLevel::info,
+                if (logger.try_log(klib::LogLevel::info,
                                    "t" + std::to_string(t) + "-" + std::to_string(i))) {
                     accepted.fetch_add(1, std::memory_order_relaxed);
                 }
@@ -171,7 +171,7 @@ TEST(AsyncLogger, ConcurrentProducersDoNotCrash) {
 }
 
 TEST(AsyncLogger, ZeroCapacityThrows) {
-    EXPECT_THROW(portfolio::AsyncLogger(0), std::invalid_argument);
+    EXPECT_THROW(klib::AsyncLogger(0), std::invalid_argument);
 }
 
 TEST(AsyncLogger, FileSinkWritesAndKeepsHandleOpen) {
@@ -179,9 +179,9 @@ TEST(AsyncLogger, FileSinkWritesAndKeepsHandleOpen) {
     std::remove(path.c_str());
 
     {
-        portfolio::AsyncLogger logger(8, portfolio::AsyncLogger::file_sink(path));
-        ASSERT_TRUE(logger.try_log(portfolio::LogLevel::info, "line-one"));
-        ASSERT_TRUE(logger.try_log(portfolio::LogLevel::error, "line-two"));
+        klib::AsyncLogger logger(8, klib::AsyncLogger::file_sink(path));
+        ASSERT_TRUE(logger.try_log(klib::LogLevel::info, "line-one"));
+        ASSERT_TRUE(logger.try_log(klib::LogLevel::error, "line-two"));
         logger.shutdown();
     }
 
@@ -195,6 +195,6 @@ TEST(AsyncLogger, FileSinkWritesAndKeepsHandleOpen) {
 }
 
 TEST(AsyncLogger, FileSinkThrowsWhenPathCannotOpen) {
-    EXPECT_THROW(portfolio::AsyncLogger::file_sink("/no/such/dir/async_logger.log"),
+    EXPECT_THROW(klib::AsyncLogger::file_sink("/no/such/dir/async_logger.log"),
                  std::runtime_error);
 }

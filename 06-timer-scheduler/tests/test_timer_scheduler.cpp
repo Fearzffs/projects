@@ -41,8 +41,8 @@ private:
 }  // namespace
 
 TEST(TimerScheduler, RunAfterFiresOnceViaPool) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(2);
+    klib::TimerScheduler timers(pool);
     WaitCounter hits;
 
     auto handle = timers.try_run_after(20ms, [&hits] { hits.bump(); });
@@ -60,8 +60,8 @@ TEST(TimerScheduler, RunAfterFiresOnceViaPool) {
 }
 
 TEST(TimerScheduler, CancelPreventsFire) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(2);
+    klib::TimerScheduler timers(pool);
     WaitCounter hits;
 
     auto handle = timers.try_run_after(100ms, [&hits] { hits.bump(); });
@@ -76,8 +76,8 @@ TEST(TimerScheduler, CancelPreventsFire) {
 }
 
 TEST(TimerScheduler, RunEveryFiresUntilCancelled) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(2);
+    klib::TimerScheduler timers(pool);
     WaitCounter hits;
 
     auto handle = timers.try_run_every(30ms, [&hits] { hits.bump(); });
@@ -95,8 +95,8 @@ TEST(TimerScheduler, RunEveryFiresUntilCancelled) {
 }
 
 TEST(TimerScheduler, ShutdownRejectsNewTimers) {
-    portfolio::ThreadPool pool(1);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(1);
+    klib::TimerScheduler timers(pool);
     timers.shutdown();
 
     auto handle = timers.try_run_after(10ms, [] {});
@@ -105,16 +105,16 @@ TEST(TimerScheduler, ShutdownRejectsNewTimers) {
 }
 
 TEST(TimerScheduler, ZeroPeriodThrows) {
-    portfolio::ThreadPool pool(1);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(1);
+    klib::TimerScheduler timers(pool);
     EXPECT_THROW(timers.try_run_every(0ms, [] {}), std::invalid_argument);
     timers.shutdown();
     pool.shutdown();
 }
 
 TEST(TimerScheduler, EarlierTimerPreemptsWait) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TimerScheduler timers(pool);
+    klib::ThreadPool pool(2);
+    klib::TimerScheduler timers(pool);
     WaitCounter hits;
 
     // Long timer first — occupies the wait_until.

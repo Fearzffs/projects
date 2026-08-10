@@ -15,7 +15,7 @@ bool is_aligned(const void* p, std::size_t alignment) {
 }  // namespace
 
 TEST(Arena, AllocatesAndTracksUsed) {
-    portfolio::Arena arena(64);
+    klib::Arena arena(64);
     void* a = arena.try_allocate(16);
     ASSERT_NE(a, nullptr);
     EXPECT_GE(arena.used(), 16u);
@@ -27,13 +27,13 @@ TEST(Arena, AllocatesAndTracksUsed) {
 }
 
 TEST(Arena, ReturnsNullWhenFull) {
-    portfolio::Arena arena(32);
+    klib::Arena arena(32);
     ASSERT_NE(arena.try_allocate(32), nullptr);
     EXPECT_EQ(arena.try_allocate(1), nullptr);
 }
 
 TEST(Arena, ResetAllowsReuse) {
-    portfolio::Arena arena(32);
+    klib::Arena arena(32);
     void* first = arena.try_allocate(32);
     ASSERT_NE(first, nullptr);
     EXPECT_EQ(arena.try_allocate(1), nullptr);
@@ -46,7 +46,7 @@ TEST(Arena, ResetAllowsReuse) {
 }
 
 TEST(Arena, HonorsAlignment) {
-    portfolio::Arena arena(128);
+    klib::Arena arena(128);
     // Force a misaligned cursor relative to 16, then request 16-byte align.
     ASSERT_NE(arena.try_allocate(1), nullptr);
     void* p = arena.try_allocate(8, 16);
@@ -55,7 +55,7 @@ TEST(Arena, HonorsAlignment) {
 }
 
 TEST(Arena, TypedAllocateAndCreate) {
-    portfolio::Arena arena(256);
+    klib::Arena arena(256);
     int* nums = arena.try_allocate<int>(4);
     ASSERT_NE(nums, nullptr);
     EXPECT_TRUE(is_aligned(nums, alignof(int)));
@@ -68,15 +68,15 @@ TEST(Arena, TypedAllocateAndCreate) {
 }
 
 TEST(Arena, ZeroCapacityThrows) {
-    EXPECT_THROW(portfolio::Arena(0), std::invalid_argument);
+    EXPECT_THROW(klib::Arena(0), std::invalid_argument);
 }
 
 TEST(Arena, BadAlignmentThrows) {
-    portfolio::Arena arena(64);
+    klib::Arena arena(64);
     EXPECT_THROW((void)arena.try_allocate(8, 3), std::invalid_argument);
 }
 
 TEST(Arena, ZeroSizeAllocateReturnsNull) {
-    portfolio::Arena arena(64);
+    klib::Arena arena(64);
     EXPECT_EQ(arena.try_allocate(0), nullptr);
 }

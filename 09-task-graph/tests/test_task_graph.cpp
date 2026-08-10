@@ -42,8 +42,8 @@ private:
 }  // namespace
 
 TEST(TaskGraph, IndependentTasksAllRun) {
-    portfolio::ThreadPool pool(4);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(4);
+    klib::TaskGraph graph(pool);
     std::atomic<int> hits{0};
 
     for (int i = 0; i < 5; ++i) {
@@ -59,8 +59,8 @@ TEST(TaskGraph, IndependentTasksAllRun) {
 }
 
 TEST(TaskGraph, PrecedeEnforcesOrder) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(2);
+    klib::TaskGraph graph(pool);
 
     std::mutex order_mutex;
     std::vector<int> order;
@@ -86,8 +86,8 @@ TEST(TaskGraph, PrecedeEnforcesOrder) {
 }
 
 TEST(TaskGraph, DiamondDependencies) {
-    portfolio::ThreadPool pool(4);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(4);
+    klib::TaskGraph graph(pool);
 
     std::atomic<int> phase{0};
     std::atomic<bool> d_ok{true};
@@ -126,8 +126,8 @@ TEST(TaskGraph, DiamondDependencies) {
 }
 
 TEST(TaskGraph, EmptyGraphCompletes) {
-    portfolio::ThreadPool pool(1);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(1);
+    klib::TaskGraph graph(pool);
     Gate done;
     graph.set_on_complete([&done] { done.arrive(); });
     ASSERT_TRUE(graph.try_run());
@@ -136,8 +136,8 @@ TEST(TaskGraph, EmptyGraphCompletes) {
 }
 
 TEST(TaskGraph, AddAfterRunThrows) {
-    portfolio::ThreadPool pool(1);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(1);
+    klib::TaskGraph graph(pool);
     (void)graph.add([] {});
     ASSERT_TRUE(graph.try_run());
     graph.wait();
@@ -146,16 +146,16 @@ TEST(TaskGraph, AddAfterRunThrows) {
 }
 
 TEST(TaskGraph, SelfPrecedeThrows) {
-    portfolio::ThreadPool pool(1);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(1);
+    klib::TaskGraph graph(pool);
     auto a = graph.add([] {});
     EXPECT_THROW(graph.precede(a, a), std::invalid_argument);
     pool.shutdown();
 }
 
 TEST(TaskGraph, WaitJoinsWithoutOnComplete) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(2);
+    klib::TaskGraph graph(pool);
     std::atomic<int> hits{0};
     auto a = graph.add([&] { hits.fetch_add(1, std::memory_order_relaxed); });
     auto b = graph.add([&] { hits.fetch_add(1, std::memory_order_relaxed); });
@@ -167,8 +167,8 @@ TEST(TaskGraph, WaitJoinsWithoutOnComplete) {
 }
 
 TEST(TaskGraph, OnDoneRunsAfterWorkBeforeSuccessor) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(2);
+    klib::TaskGraph graph(pool);
 
     std::mutex order_mutex;
     std::vector<int> order;
@@ -198,8 +198,8 @@ TEST(TaskGraph, OnDoneRunsAfterWorkBeforeSuccessor) {
 }
 
 TEST(TaskGraph, OnDoneAndOnCompleteBothFire) {
-    portfolio::ThreadPool pool(2);
-    portfolio::TaskGraph graph(pool);
+    klib::ThreadPool pool(2);
+    klib::TaskGraph graph(pool);
     std::atomic<int> per_task{0};
     Gate done;
 

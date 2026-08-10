@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(async_logger_tests test_async_logger.cpp)
 target_link_libraries(async_logger_tests
     PRIVATE
-        portfolio::async_logger
+        klib::async_logger
         GTest::gtest_main
 )
 

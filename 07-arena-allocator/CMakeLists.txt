@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(arena_allocator INTERFACE)
-add_library(portfolio::arena_allocator ALIAS arena_allocator)
+add_library(klib::arena_allocator ALIAS arena_allocator)
 target_include_directories(arena_allocator INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>

@@ -32,8 +32,8 @@ cd 09-task-graph/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::ThreadPool pool(4);
-portfolio::TaskGraph graph(pool);
+klib::ThreadPool pool(4);
+klib::TaskGraph graph(pool);
 
 auto a = graph.add(
     [] { /* work */ },

@@ -30,7 +30,7 @@ cd 07-arena-allocator/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::Arena arena(4 * 1024);
+klib::Arena arena(4 * 1024);
 
 void* raw = arena.try_allocate(128);
 int* xs = arena.try_allocate<int>(32);

@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 
 /// Fixed-size thread pool with non-blocking submit and completion callbacks.
 ///
@@ -148,4 +148,4 @@ private:
     std::vector<std::thread> workers_;
 };
 
-}  // namespace portfolio
+}  // namespace klib

@@ -31,7 +31,7 @@ cd 10-signal-slot/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::Signal<int> health_changed;
+klib::Signal<int> health_changed;
 
 struct Hud {
     void on_health(int hp);
@@ -44,12 +44,12 @@ auto c1 = health_changed.connect([](int hp) { /* ... */ });
 // Queued: slot runs on the thread that called connect, after process()
 auto c2 = health_changed.connect(
     &hud, &Hud::on_health,
-    portfolio::ConnectionType::Queued);
+    klib::ConnectionType::Queued);
 
 health_changed.emit(80);  // c1 runs now; c2 is posted to connect-thread queue
 
 // On the connect thread (often a loop / UI / worker pump):
-portfolio::SlotDispatcher::this_thread().process();
+klib::SlotDispatcher::this_thread().process();
 ```
 
 ## Connection types

@@ -22,7 +22,7 @@ struct Hud {
 }  // namespace
 
 TEST(Signal, EmitInvokesSlotsInConnectOrder) {
-    portfolio::Signal<int> sig;
+    klib::Signal<int> sig;
     std::vector<int> order;
 
     auto c1 = sig.connect([&](int v) { order.push_back(v * 10 + 1); });
@@ -38,7 +38,7 @@ TEST(Signal, EmitInvokesSlotsInConnectOrder) {
 }
 
 TEST(Signal, MemberBindReceivesArgs) {
-    portfolio::Signal<int> sig;
+    klib::Signal<int> sig;
     Hud hud;
     auto c = sig.connect(&hud, &Hud::on_health);
 
@@ -51,7 +51,7 @@ TEST(Signal, MemberBindReceivesArgs) {
 }
 
 TEST(Signal, DisconnectStopsDelivery) {
-    portfolio::Signal<> sig;
+    klib::Signal<> sig;
     int hits = 0;
     auto c = sig.connect([&] { ++hits; });
 
@@ -64,10 +64,10 @@ TEST(Signal, DisconnectStopsDelivery) {
 }
 
 TEST(Signal, ConnectDuringEmitMissesCurrentEmission) {
-    portfolio::Signal<> sig;
+    klib::Signal<> sig;
     int a_hits = 0;
     int b_hits = 0;
-    portfolio::Connection late;
+    klib::Connection late;
 
     auto c = sig.connect([&] {
         ++a_hits;
@@ -85,7 +85,7 @@ TEST(Signal, ConnectDuringEmitMissesCurrentEmission) {
 }
 
 TEST(Signal, MultiArgEmit) {
-    portfolio::Signal<int, std::string> sig;
+    klib::Signal<int, std::string> sig;
     int got_i = 0;
     std::string got_s;
     auto c = sig.connect([&](int i, const std::string& s) {
@@ -100,19 +100,19 @@ TEST(Signal, MultiArgEmit) {
 }
 
 TEST(Signal, EmptyEmitIsNoOp) {
-    portfolio::Signal<int> sig;
+    klib::Signal<int> sig;
     EXPECT_EQ(sig.slot_count(), 0u);
     sig.emit(1);  // must not crash
 }
 
 TEST(Signal, NullObjectThrows) {
-    portfolio::Signal<int> sig;
+    klib::Signal<int> sig;
     Hud* hud = nullptr;
     EXPECT_THROW(sig.connect(hud, &Hud::on_health), std::invalid_argument);
 }
 
 TEST(Signal, ExceptionInSlotDoesNotStopOthers) {
-    portfolio::Signal<> sig;
+    klib::Signal<> sig;
     int hits = 0;
     auto c1 = sig.connect([] { throw std::runtime_error("boom"); });
     auto c2 = sig.connect([&] { ++hits; });
@@ -124,13 +124,13 @@ TEST(Signal, ExceptionInSlotDoesNotStopOthers) {
 }
 
 TEST(Signal, DirectRunsOnEmitterThread) {
-    portfolio::Signal<> sig;
+    klib::Signal<> sig;
     std::thread::id slot_thread;
     const auto emitter = std::this_thread::get_id();
 
     auto c = sig.connect(
         [&] { slot_thread = std::this_thread::get_id(); },
-        portfolio::ConnectionType::Direct);
+        klib::ConnectionType::Direct);
 
     sig.emit();
     EXPECT_EQ(slot_thread, emitter);
@@ -138,14 +138,14 @@ TEST(Signal, DirectRunsOnEmitterThread) {
 }
 
 TEST(Signal, QueuedRunsOnConnectThreadAfterProcess) {
-    portfolio::Signal<int> sig;
+    klib::Signal<int> sig;
     std::atomic<bool> connected{false};
     std::atomic<bool> emitted{false};
     std::atomic<bool> done{false};
     std::thread::id connect_thread;
     std::thread::id slot_thread;
     int value = 0;
-    portfolio::Connection conn;
+    klib::Connection conn;
 
     std::thread worker([&] {
         connect_thread = std::this_thread::get_id();
@@ -155,7 +155,7 @@ TEST(Signal, QueuedRunsOnConnectThreadAfterProcess) {
                 slot_thread = std::this_thread::get_id();
                 done.store(true, std::memory_order_release);
             },
-            portfolio::ConnectionType::Queued);
+            klib::ConnectionType::Queued);
         connected.store(true, std::memory_order_release);
 
         while (!emitted.load(std::memory_order_acquire)) {
@@ -163,9 +163,9 @@ TEST(Signal, QueuedRunsOnConnectThreadAfterProcess) {
         }
         // Slot must not have run yet — still queued on this thread.
         EXPECT_FALSE(done.load(std::memory_order_acquire));
-        EXPECT_EQ(portfolio::SlotDispatcher::this_thread().pending(), 1u);
+        EXPECT_EQ(klib::SlotDispatcher::this_thread().pending(), 1u);
 
-        const std::size_t ran = portfolio::SlotDispatcher::this_thread().process();
+        const std::size_t ran = klib::SlotDispatcher::this_thread().process();
         EXPECT_EQ(ran, 1u);
         EXPECT_TRUE(done.load(std::memory_order_acquire));
     });
@@ -183,15 +183,15 @@ TEST(Signal, QueuedRunsOnConnectThreadAfterProcess) {
 }
 
 TEST(Signal, QueuedSameThreadStillNeedsProcess) {
-    portfolio::Signal<> sig;
+    klib::Signal<> sig;
     int hits = 0;
-    auto c = sig.connect([&] { ++hits; }, portfolio::ConnectionType::Queued);
+    auto c = sig.connect([&] { ++hits; }, klib::ConnectionType::Queued);
 
     sig.emit();
     EXPECT_EQ(hits, 0);
-    EXPECT_EQ(portfolio::SlotDispatcher::this_thread().pending(), 1u);
+    EXPECT_EQ(klib::SlotDispatcher::this_thread().pending(), 1u);
 
-    EXPECT_EQ(portfolio::SlotDispatcher::this_thread().process(), 1u);
+    EXPECT_EQ(klib::SlotDispatcher::this_thread().process(), 1u);
     EXPECT_EQ(hits, 1);
     (void)c;
 }

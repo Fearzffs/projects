@@ -30,8 +30,8 @@ cd 06-timer-scheduler/build && ctest --output-on-failure
 ## API sketch
 
 ```cpp
-portfolio::ThreadPool pool(4);
-portfolio::TimerScheduler timers(pool);  // pool must outlive timers
+klib::ThreadPool pool(4);
+klib::TimerScheduler timers(pool);  // pool must outlive timers
 
 auto once = timers.try_run_after(50ms, [] {
     // runs on a pool worker

@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(thread_pool_tests test_thread_pool.cpp)
 target_link_libraries(thread_pool_tests
     PRIVATE
-        portfolio::thread_pool
+        klib::thread_pool
         GTest::gtest_main
 )
 

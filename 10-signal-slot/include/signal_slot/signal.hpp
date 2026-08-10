@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace portfolio {
+namespace klib {
 
 /// How a slot is invoked relative to emit.
 ///
@@ -230,4 +230,4 @@ private:
     std::shared_ptr<State> state_;
 };
 
-}  // namespace portfolio
+}  // namespace klib
