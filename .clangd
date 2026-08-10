@@ -3,6 +3,7 @@
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I10-signal-slot/include
     - -I09-task-graph/include
     - -I08-blocking-mpmc-queue/include
     - -I07-arena-allocator/include

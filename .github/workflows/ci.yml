@@ -103,3 +103,14 @@ jobs:
         run: cmake --build 09-task-graph/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 09-task-graph/build --output-on-failure
+
+  signal-slot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 10-signal-slot/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 10-signal-slot/build --output-on-failure

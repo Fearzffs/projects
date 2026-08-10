@@ -2,6 +2,77 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug signal_slot_tests (all)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/10-signal-slot/build/tests/signal_slot_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build signal-slot tests"
+    },
+    {
+      "name": "Debug signal_slot_tests (one test)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/10-signal-slot/build/tests/signal_slot_tests",
+      "args": [
+        "--gtest_filter=${input:signalSlotGtestFilter}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "DEBUGINFOD_URLS",
+          "value": ""
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Disable debuginfod (avoids hang on Ubuntu)",
+          "text": "set debuginfod enabled off",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "CMake: build signal-slot tests"
+    },
+    {
+      "name": "CodeLLDB: signal_slot_tests (all)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/10-signal-slot/build/tests/signal_slot_tests",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "CMake: build signal-slot tests"
+    },
+    {
       "name": "Debug task_graph_tests (all)",
       "type": "cppdbg",
       "request": "launch",
@@ -738,6 +809,12 @@
     }
   ],
   "inputs": [
+    {
+      "id": "signalSlotGtestFilter",
+      "type": "promptString",
+      "description": "GoogleTest filter (suite.testcase)",
+      "default": "Signal.MemberBindReceivesArgs"
+    },
     {
       "id": "taskGraphGtestFilter",
       "type": "promptString",

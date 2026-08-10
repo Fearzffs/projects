@@ -28,16 +28,16 @@ Do **not** turn this into a long theory session — 15–30 minutes max.
 | Dangling / lifetime | return `&local`; use-after-scope | 2026-08-07 | 4 | Leak→dangling aha; arena vs &local clear |
 | Atomics publish | release store after payload; acquire before read | 2026-08-06 | 4 | SPSC aha closed B1 |
 | Atomic ≠ whole object | nearby non-atomics still race | 2026-08-06 | 4 | B2 clean |
-| Relaxed counters | RMW total OK; not for publishing data | 2026-08-06 | 3 | Wording fuzzy (“points to”) |
-| CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-07 | 4 | unlock-while-sleep + relock on wake — locked in |
-| CV predicate | re-check condition; spurious/wrong wake | 2026-08-07 | 4 | Tied to lost-wakeup story |
+| Relaxed counters | RMW total OK; not for publishing data | 2026-08-10 | 3 | A1 solid; A3 still “correct value” wording — keep drilling |
+| CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-10 | 3 | Missed unlock-then-wait lost notify; picture not cold yet |
+| CV predicate | re-check condition; spurious/wrong wake | 2026-08-10 | 3 | Said “check on notify”; missed check-*before*-wait |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-08-06 | 4 | Clear |
 
 ## Morning queue (rotate)
 
-1. Lost wakeup picture (keep warm until solid)
-2. Relaxed vs release-acquire “when”
-3. Relaxed vs release-acquire “when”)
+1. Lost wakeup picture (unlock → notify → wait) — priority until 4+
+2. CV predicate: check before wait + every wake
+3. Relaxed vs release-acquire one-liner (keep drilling wording)
 4. Quick stack/heap + atomics smoke check (keep warm)
 
 ## Done well recently (don’t ignore)

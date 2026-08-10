@@ -93,6 +93,14 @@ cmake --build 09-task-graph/build -j"$(nproc)"
 ctest --test-dir 09-task-graph/build --output-on-failure
 ```
 
+### 10 — signal / slot
+
+```bash
+cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 10-signal-slot/build -j"$(nproc)"
+ctest --test-dir 10-signal-slot/build --output-on-failure
+```
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

@@ -15,11 +15,11 @@ Ordered next projects. Do not invent new folders or reorder unless the human ask
 | `07-arena-allocator` | Bump arena allocate + reset |
 | `08-blocking-mpmc-queue` | Bounded MPMC; CV back-pressure |
 | `09-task-graph` | Lite DAG on thread pool; `precede` + `try_run` |
+| `10-signal-slot` | Sync Signal/Slot; member binds; RAII Connection |
 
 ## Remaining (in order)
 
-1. **Signal / slot system** — Connect/emit distinct from `04` event bus (before showcase).
-2. **Showcase demo app** — Glue pool + bus + logger + timer (and later pieces) without modifying earlier public APIs.
+1. **Showcase demo app** — Glue pool + bus + logger + timer (and later pieces) without modifying earlier public APIs.
 
 ## Standing decisions
 

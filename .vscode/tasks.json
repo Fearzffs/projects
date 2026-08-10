@@ -3,9 +3,9 @@
   "tasks": [
     {
       "label": "build",
-      "detail": "Configure (if needed) and build task_graph_tests",
+      "detail": "Configure (if needed) and build signal_slot_tests",
       "type": "shell",
-      "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\"",
+      "command": "cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 10-signal-slot/build -j\"$(nproc)\"",
       "windows": {
         "options": {
           "shell": {
@@ -13,7 +13,7 @@
             "args": ["-e", "bash", "-lc"]
           }
         },
-        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\""
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 10-signal-slot/build -j\"$(nproc)\""
       },
       "group": {
         "kind": "build",
@@ -28,6 +28,86 @@
     },
     {
       "label": "test",
+      "detail": "Build then run ctest for signal/slot",
+      "type": "shell",
+      "command": "cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 10-signal-slot/build -j\"$(nproc)\" && cd 10-signal-slot/build && ctest --output-on-failure",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 10-signal-slot/build -j\"$(nproc)\" && cd 10-signal-slot/build && ctest --output-on-failure"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "CMake: configure signal-slot (Debug)",
+      "type": "shell",
+      "command": "cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 10-signal-slot -B 10-signal-slot/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: build signal-slot tests",
+      "type": "shell",
+      "command": "cmake --build 10-signal-slot/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake --build 10-signal-slot/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "dependsOn": "CMake: configure signal-slot (Debug)"
+    },
+    {
+      "label": "build task-graph",
+      "detail": "Configure (if needed) and build task_graph_tests",
+      "type": "shell",
+      "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\"",
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-e", "bash", "-lc"]
+          }
+        },
+        "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\""
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false
+      }
+    },
+    {
+      "label": "test task-graph",
       "detail": "Build then run ctest for task graph",
       "type": "shell",
       "command": "cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\" && cd 09-task-graph/build && ctest --output-on-failure",
@@ -40,10 +120,7 @@
         },
         "command": "cd \"$(wslpath -a '${workspaceFolder}')\" && cmake -S 09-task-graph -B 09-task-graph/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ && cmake --build 09-task-graph/build -j\"$(nproc)\" && cd 09-task-graph/build && ctest --output-on-failure"
       },
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
+      "group": "test",
       "problemMatcher": ["$gcc"],
       "presentation": {
         "reveal": "always",
