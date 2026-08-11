@@ -1,6 +1,10 @@
 # Build trees
 **/build/
+**/build-*/
 **/cmake-build-*/
+
+# CTest (repo-root or accidental out-of-tree runs)
+Testing/
 
 # IDE / tooling
 .cache/
