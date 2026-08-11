@@ -19,6 +19,7 @@ I am a lead C++ developer. This repo is for staying sharp with modern C++ and fo
 | [`09-task-graph`](09-task-graph) | Lite task DAG on `03` pool (`precede` / `try_run`) |
 | [`10-signal-slot`](10-signal-slot) | Sync signal/slot; member binds (distinct from `04` bus) |
 | [`11-fsm`](11-fsm) | Flat FSM; transitions + enter/exit; sync `handle` |
+| [`12-showcase-demo`](12-showcase-demo) | Telemetry showcase gluing `01`–`11` (real host metrics) |
 
 ## Conventions
 
@@ -35,7 +36,7 @@ See [`AGENTS.md`](AGENTS.md) and `scripts/wsl-finish-setup.ps1`.
 
 ## Backlog
 
-Ordered remaining projects: [`docs/BACKLOG.md`](docs/BACKLOG.md). Next after `11`: **showcase demo**.
+Backlog: [`docs/BACKLOG.md`](docs/BACKLOG.md) (spine complete through `12-showcase-demo`).
 
 ## Agent workflow
 

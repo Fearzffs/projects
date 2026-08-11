@@ -19,6 +19,19 @@ IDE_DEPS = {
     "05-async-logger": ["02-spsc-ring-buffer"],
     "06-timer-scheduler": ["03-thread-pool"],
     "09-task-graph": ["03-thread-pool"],
+    "12-showcase-demo": [
+        "01-ring-buffer",
+        "02-spsc-ring-buffer",
+        "03-thread-pool",
+        "04-event-bus",
+        "05-async-logger",
+        "06-timer-scheduler",
+        "07-arena-allocator",
+        "08-blocking-mpmc-queue",
+        "09-task-graph",
+        "10-signal-slot",
+        "11-fsm",
+    ],
 }
 
 

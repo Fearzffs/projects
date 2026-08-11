@@ -109,6 +109,16 @@ cmake --build 11-fsm/build -j"$(nproc)"
 ctest --test-dir 11-fsm/build --output-on-failure
 ```
 
+### 12 — showcase demo
+
+```bash
+cmake -S 12-showcase-demo -B 12-showcase-demo/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+cmake --build 12-showcase-demo/build -j"$(nproc)"
+ctest --test-dir 12-showcase-demo/build --output-on-failure
+./12-showcase-demo/build/showcase_demo --seconds 2 --samples 5 --period-ms 200
+```
+
+
 ## Windows (WSL)
 
 Home PC builds through **WSL Ubuntu**; the git clone stays on the Windows drive

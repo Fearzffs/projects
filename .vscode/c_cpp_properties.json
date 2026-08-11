@@ -14,6 +14,7 @@
         "${workspaceFolder}/09-task-graph/include",
         "${workspaceFolder}/10-signal-slot/include",
         "${workspaceFolder}/11-fsm/include",
+        "${workspaceFolder}/12-showcase-demo/include",
         "${workspaceFolder}/01-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/02-spsc-ring-buffer/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/03-thread-pool/build/_deps/googletest-src/googletest/include",
@@ -24,7 +25,8 @@
         "${workspaceFolder}/08-blocking-mpmc-queue/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/09-task-graph/build/_deps/googletest-src/googletest/include",
         "${workspaceFolder}/10-signal-slot/build/_deps/googletest-src/googletest/include",
-        "${workspaceFolder}/11-fsm/build/_deps/googletest-src/googletest/include"
+        "${workspaceFolder}/11-fsm/build/_deps/googletest-src/googletest/include",
+        "${workspaceFolder}/12-showcase-demo/build/_deps/googletest-src/googletest/include"
       ],
       "browse": {
         "path": [
@@ -38,7 +40,8 @@
           "${workspaceFolder}/08-blocking-mpmc-queue/include",
           "${workspaceFolder}/09-task-graph/include",
           "${workspaceFolder}/10-signal-slot/include",
-          "${workspaceFolder}/11-fsm/include"
+          "${workspaceFolder}/11-fsm/include",
+          "${workspaceFolder}/12-showcase-demo/include"
         ],
         "limitSymbolsToIncludedHeaders": false
       },

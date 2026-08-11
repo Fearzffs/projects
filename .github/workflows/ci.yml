@@ -125,3 +125,16 @@ jobs:
         run: cmake --build 11-fsm/build -j$(nproc)
       - name: Test
         run: ctest --test-dir 11-fsm/build --output-on-failure
+
+  showcase-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S 12-showcase-demo -B 12-showcase-demo/build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++
+      - name: Build
+        run: cmake --build 12-showcase-demo/build -j$(nproc)
+      - name: Test
+        run: ctest --test-dir 12-showcase-demo/build --output-on-failure
+      - name: Run demo
+        run: ./12-showcase-demo/build/showcase_demo --seconds 2 --samples 3 --period-ms 50

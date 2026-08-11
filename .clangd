@@ -3,6 +3,7 @@
 CompileFlags:
   Add:
     - -std=c++2a
+    - -I12-showcase-demo/include
     - -I11-fsm/include
     - -I10-signal-slot/include
     - -I09-task-graph/include
