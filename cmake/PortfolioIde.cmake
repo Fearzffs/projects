@@ -3,6 +3,9 @@
 #
 # Regenerates the workspace-root compile_commands.json used by clangd so
 # tests/*.cpp always see project includes, cross-folder deps, and gtest.
+# Also pulls optional ASAN/TSAN flags (PORTFOLIO_ASAN / PORTFOLIO_TSAN).
+
+include("${CMAKE_CURRENT_LIST_DIR}/PortfolioSanitizers.cmake")
 
 get_filename_component(_PORTFOLIO_ROOT "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
 set(_PORTFOLIO_GEN_SCRIPT "${_PORTFOLIO_ROOT}/scripts/generate_compile_commands.py")

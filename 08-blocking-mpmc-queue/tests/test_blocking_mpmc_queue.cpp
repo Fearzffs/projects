@@ -159,3 +159,81 @@ TEST(BlockingMpmcQueue, ConcurrentProducersConsumers) {
 TEST(BlockingMpmcQueue, ZeroCapacityThrows) {
     EXPECT_THROW(klib::BlockingMpmcQueue<int>(0), std::invalid_argument);
 }
+
+TEST(BlockingMpmcQueue, StressManyProducersConsumers) {
+    constexpr int kProducers = 8;
+    constexpr int kConsumers = 8;
+    constexpr int kPerProducer = 2000;
+    constexpr int kTotal = kProducers * kPerProducer;
+    klib::BlockingMpmcQueue<int> q(64);
+
+    std::atomic<int> consumed{0};
+    std::atomic<long long> sum{0};
+
+    std::vector<std::thread> producers;
+    producers.reserve(kProducers);
+    for (int p = 0; p < kProducers; ++p) {
+        producers.emplace_back([&, p] {
+            for (int i = 0; i < kPerProducer; ++i) {
+                ASSERT_TRUE(q.push(p * kPerProducer + i));
+            }
+        });
+    }
+
+    std::vector<std::thread> consumers;
+    consumers.reserve(kConsumers);
+    for (int c = 0; c < kConsumers; ++c) {
+        consumers.emplace_back([&] {
+            while (true) {
+                auto item = q.pop();
+                if (!item.has_value()) {
+                    return;
+                }
+                sum.fetch_add(*item, std::memory_order_relaxed);
+                if (consumed.fetch_add(1, std::memory_order_acq_rel) + 1 == kTotal) {
+                    q.shutdown();
+                    return;
+                }
+            }
+        });
+    }
+
+    for (auto& t : producers) {
+        t.join();
+    }
+    for (auto& t : consumers) {
+        t.join();
+    }
+
+    EXPECT_EQ(consumed.load(), kTotal);
+    const long long expected =
+        static_cast<long long>(kTotal - 1) * static_cast<long long>(kTotal) / 2;
+    EXPECT_EQ(sum.load(), expected);
+}
+
+TEST(BlockingMpmcQueue, ShutdownWhileMixedTryAndBlocking) {
+    klib::BlockingMpmcQueue<int> q(4);
+    std::atomic<bool> stop{false};
+    std::atomic<int> blocking_push_fails{0};
+
+    std::thread blocker([&] {
+        while (!stop.load(std::memory_order_acquire)) {
+            if (!q.push(1)) {
+                blocking_push_fails.fetch_add(1, std::memory_order_relaxed);
+                return;
+            }
+            (void)q.try_pop();
+        }
+    });
+
+    std::this_thread::sleep_for(20ms);
+    q.shutdown();
+    stop.store(true, std::memory_order_release);
+    blocker.join();
+
+    EXPECT_GE(blocking_push_fails.load(), 0);
+    EXPECT_FALSE(q.push(99));
+    while (q.try_pop().has_value()) {
+    }
+    EXPECT_FALSE(q.pop().has_value());
+}

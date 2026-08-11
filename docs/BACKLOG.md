@@ -23,6 +23,14 @@ Ordered next projects. Do not invent new folders or reorder unless the human ask
 
 _(empty — portfolio spine complete)_
 
+## Post-demo lab (not new folders)
+
+After `12`, default work is **depth on existing primitives**, not `13+` samples:
+
+1. Close LEARNING wording gaps ([`docs/LEARNING.md`](LEARNING.md) Phase 0)
+2. Harden: stress tests, ASAN/TSAN (`-DPORTFOLIO_ASAN=ON` / `-DPORTFOLIO_TSAN=ON`), shutdown/lifetime, API contracts
+3. Weekly systems themes (memory model, back-pressure, scheduling, false sharing, lock-free tradeoffs, design teach-backs)
+
 ## Standing decisions
 
 - Prefer non-blocking APIs + callbacks/events over blocking callers (`future.get()`, etc.).
@@ -30,3 +38,4 @@ _(empty — portfolio spine complete)_
 - Keep primitives clean; composition belongs in the showcase, not inside earlier folders.
 - Signal/slot must teach something different from `04` (e.g. sync emit, member binds) — not a clone of the event bus.
 - FSM stays flat (no hierarchical / concurrent regions); showcase owns the story, FSM owns the state table.
+- Do not invent new numbered folders for “depth” — stress and theme inside `01`–`12` unless the human asks.

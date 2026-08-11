@@ -9,9 +9,13 @@ alwaysApply: true
 - Portfolio spine is complete through `12-showcase-demo`.
 - Do not invent new portfolio folders or reorder the backlog unless the human asks.
 - Do not retrofit logger into `01`–`04`; keep primitives clean.
+- Post-demo default: harden / theme existing `01`–`12` (see LEARNING Deep track), not new sample folders.
 
 # Morning learning ritual
 
-- At session start (when the human is doing a learning day): run a short gap quiz from [`docs/LEARNING.md`](docs/LEARNING.md) before new project work.
-- Update scores/notes in that file after the drill so progress is visible over time.
-- Keep the drill short (15–30 minutes); then continue the backlog project.
+- At session start (when the human is doing a learning day): run a short gap quiz from [`docs/LEARNING.md`](docs/LEARNING.md) before deep/lab work.
+- Rotate **concurrency** (Phase 0 banks A/B until 4+) with **C++ core**: smart pointers (C), value categories/`std::move` (D), inheritance (E), design-patterns map (F).
+- Prefer 1 concurrency + 1 C++-core gap when energy allows; still 15–30 minutes total.
+- First pass on C–F is diagnostic (score 0→honest 1–5); then drill to 4+.
+- Update scores/notes in LEARNING after the drill so progress is visible over time.
+- Then one deep block (stress test, sanitizer run, or weekly theme).

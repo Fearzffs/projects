@@ -198,3 +198,47 @@ TEST(AsyncLogger, FileSinkThrowsWhenPathCannotOpen) {
     EXPECT_THROW(klib::AsyncLogger::file_sink("/no/such/dir/async_logger.log"),
                  std::runtime_error);
 }
+
+TEST(AsyncLogger, StressConcurrentProducersThenDrain) {
+    auto sink = std::make_shared<CapturingSink>();
+    klib::AsyncLogger logger(1024, [sink](klib::LogLevel level,
+                                               std::string_view msg) { (*sink)(level, msg); });
+
+    constexpr int kThreads = 8;
+    constexpr int kPerThread = 500;
+    std::vector<std::thread> threads;
+    threads.reserve(kThreads);
+    std::atomic<int> accepted{0};
+
+    for (int t = 0; t < kThreads; ++t) {
+        threads.emplace_back([&logger, &accepted, t] {
+            for (int i = 0; i < kPerThread; ++i) {
+                if (logger.try_log(klib::LogLevel::info,
+                                   "t" + std::to_string(t) + "-" + std::to_string(i))) {
+                    accepted.fetch_add(1, std::memory_order_relaxed);
+                }
+            }
+        });
+    }
+    for (auto& th : threads) {
+        th.join();
+    }
+    logger.shutdown();
+
+    EXPECT_EQ(static_cast<int>(sink->records.size()), accepted.load());
+    EXPECT_GT(accepted.load(), 0);
+    EXPECT_LE(accepted.load(), kThreads * kPerThread);
+}
+
+TEST(AsyncLogger, ShutdownIdempotentAndRejectsAfter) {
+    auto sink = std::make_shared<CapturingSink>();
+    klib::AsyncLogger logger(32, [sink](klib::LogLevel level,
+                                             std::string_view msg) { (*sink)(level, msg); });
+
+    ASSERT_TRUE(logger.try_log(klib::LogLevel::info, "once"));
+    logger.shutdown();
+    logger.shutdown();  // second call must be safe
+    EXPECT_FALSE(logger.try_log(klib::LogLevel::info, "nope"));
+    sink->wait_for_count(1);
+    EXPECT_EQ(sink->records.size(), 1u);
+}

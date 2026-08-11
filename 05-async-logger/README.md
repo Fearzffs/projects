@@ -47,6 +47,14 @@ klib::AsyncLogger custom(64, [](klib::LogLevel level, std::string_view msg) {
 custom.shutdown();  // drain + join; destructor also calls shutdown
 ```
 
+## Thread / lifetime contracts
+
+- **`try_log`:** many app threads OK (serialized by an internal producer mutex); never blocks on I/O; returns false if full or after shutdown.
+- **Writer:** one dedicated consumer thread owns the sink calls.
+- **`shutdown()`:** stop accepts, drain remaining records through the sink, join writer. Safe to call more than once; destructor also shuts down.
+- **Do not** shut down the thread pool *under* a logger that still needs to finish draining if the sink or callers depend on that pool — logger has its own writer thread, but anything the sink touches must outlive drain.
+- Drop policy when full: record is not enqueued (caller sees `false`); not a blocking back-pressure story (contrast `08`).
+
 ## Decisions
 
 | Choice | Rationale |

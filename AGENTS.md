@@ -118,6 +118,19 @@ ctest --test-dir 12-showcase-demo/build --output-on-failure
 ./12-showcase-demo/build/showcase_demo --seconds 2 --samples 5 --period-ms 200
 ```
 
+### Lab sanitizers (`05` / `08`)
+
+Include [`cmake/PortfolioSanitizers.cmake`](cmake/PortfolioSanitizers.cmake) early (already wired in `05` and `08`). Example TSAN on the blocking queue:
+
+```bash
+cmake -S 08-blocking-mpmc-queue -B 08-blocking-mpmc-queue/build-tsan \
+  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++ -DPORTFOLIO_TSAN=ON
+cmake --build 08-blocking-mpmc-queue/build-tsan -j"$(nproc)"
+cd 08-blocking-mpmc-queue/build-tsan && ctest --output-on-failure
+```
+
+Use `-DPORTFOLIO_ASAN=ON` the same way. Do not enable both.
+
 
 ## Windows (WSL)
 

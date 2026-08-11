@@ -49,6 +49,13 @@ fsm.handle(Event::StartLoad);    // exit Boot → enter Loading
 fsm.handle(Event::LoadDone);     // → Ready
 ```
 
+## Thread / lifetime contracts
+
+- **`handle` / `start`:** single-threaded control — only one thread may call them (typically main). Not safe to `handle` from pool workers concurrently.
+- Workers that need a transition should **post events** to the owning thread (mutexed queue + drain), as in `12-showcase-demo`.
+- Enter/exit callbacks run on the thread that called `handle`; if they re-enter `handle`, nesting happens — keep hooks simple.
+- No internal thread pool; lifetime is just the `Fsm` object on the owner thread.
+
 ## Decisions
 
 | Choice | Rationale |

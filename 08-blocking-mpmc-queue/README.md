@@ -42,6 +42,13 @@ q.try_pop();
 q.shutdown();              // wake waiters; push fails; pop drains then nullopt
 ```
 
+## Thread / lifetime contracts
+
+- **MPMC:** many producers and consumers may call `push` / `pop` / `try_*` concurrently.
+- **`shutdown()`:** call once from a controlling thread at app teardown; wakes waiters. After shutdown, `push` fails; `pop` drains then returns nullopt.
+- **Do not** destroy the queue while other threads still call into it without having observed shutdown (join producers/consumers first, or ensure they exit on failed push / empty pop after shutdown).
+- Prefer shutdown order with siblings: stop timers that feed the queue → shutdown queue → then pool that runs callbacks (see showcase).
+
 ## Decisions
 
 | Choice | Rationale |
