@@ -35,8 +35,8 @@ CP (1–4 problems/day) stays separate.
 | CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-11 | 4 | Lost-wakeup timeline cold; lock+atomic wait was the missing piece |
 | CV predicate | re-check condition; spurious/wrong wake | 2026-08-11 | 4 | Before-sleep check locked in; after-wake = spurious/stolen item |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-08-06 | 4 | Clear |
-| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-11 | 3 | Phase 0 focus — wording still soft |
-| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | — | 0 | Not assessed — bank C |
+| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-27 | 3 | Restart: same `i`, different payload; A2/A3 ok; not cold 4 |
+| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-08-27 | 3 | C4 copy/move clean; C5 lock≠bool; C6 two control blocks + don’t wrap raw twice |
 | Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | — | 0 | Not assessed — bank D |
 | Inheritance / virtual | vtable, dtor, slicing, override | — | 0 | Not assessed — bank E |
 | Design patterns (core set) | when/why; not memorizing UML | — | 0 | Not assessed — bank F (baseline) |
@@ -191,7 +191,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- First live drill (banks A+B scores) still awaits the human after vacation — do not bump Phase 0 scores to 4 until teach-back.
+- 2026-08-27 bank A teach-back: payload vs doorbell landed after restart (A1–A3). Score stays 3 until a cold 4. Bank C: diagnostic 2 then drill to 3 (copy/move + dual wrap). Bank B + D–F still open. Do not bump A or C to 4 until teach-back is cold.
 
 ## Done well recently (don’t ignore)
 
