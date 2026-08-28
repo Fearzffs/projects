@@ -13,9 +13,7 @@ alwaysApply: true
 
 # Morning learning ritual
 
-- At session start (when the human is doing a learning day): run a short gap quiz from [`docs/LEARNING.md`](docs/LEARNING.md) before deep/lab work.
-- Rotate **concurrency** (Phase 0 banks A/B until 4+) with **C++ core**: smart pointers (C), value categories/`std::move` (D), inheritance (E), design-patterns map (F).
-- Prefer 1 concurrency + 1 C++-core gap when energy allows; still 15–30 minutes total.
-- First pass on C–F is diagnostic (score 0→honest 1–5); then drill to 4+.
-- Update scores/notes in LEARNING after the drill so progress is visible over time.
-- Then one deep block (stress test, sanitizer run, or weekly theme).
+- At session start (when the human is doing a learning day): one **interview snippet** from [`docs/LEARNING.md`](docs/LEARNING.md) (Interview queue) — not labeled bank A1/C4 quizzes.
+- Banks A–F in LEARNING are **answer keys**. After they answer, map the snippet to a gap and update scores.
+- First weeks: remaining 3s (B flag vs count, C `lock()`, D move-as-cast, E virtual vs override / slicing), plus A smoke for a second cold 4.
+- 1–2 snippets; 15–30 minutes total. Then deep/lab only if scheduled (TSAN/themes next week unless asked).

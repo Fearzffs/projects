@@ -1,17 +1,34 @@
 # Learning gaps tracker
 
-Short morning drill (before deep / lab work). Re-quiz the open gaps; update scores.
+Short morning drill (before deep / lab work). **Interview snippets**, not labeled bank quizzes.
 Do **not** turn this into a long theory session — 15–30 minutes max.
-Then one deep block (harden a primitive or a Phase-2 theme).
+Then one deep block (harden a primitive or a Phase-2 theme) — lab is next week unless asked.
 
 CP (1–4 problems/day) stays separate.
 
 ## Ritual
 
-1. Pick gaps: prefer **1 concurrency + 1 C++-core** when energy allows (else one only).
-2. 2–4 quiz questions each (teach-back). Concurrency: bug hunts in `02`/`05`/`08` once wording is warm. C++ core: banks C–F.
-3. Update **Last checked** + **Score (1–5)** + one-line note (`0` = not assessed yet).
-4. Then start the day’s deep block (lab or theme).
+1. Open with **one** C++ interview snippet (buggy code, or “what do you tell the interviewer”). No A1/C4 labels until after they answer.
+2. Human answers; then reveal what’s wrong / the target; map to a gap in the table below.
+3. Update **Last checked** + **Score (1–5)** + one-line note.
+4. Optional second snippet if the first was instant. Still 15–30 min total.
+5. Deep block only if scheduled (lab/`08` TSAN next week).
+
+Banks A–F below stay as **answer keys**, not the daily prompt list.
+
+## Interview queue (first weeks)
+
+Prefer snippets that hit remaining **3**s, then keep A at 4:
+
+1. Relaxed **count** vs **flag** that publishes a payload (bank B)
+2. `weak_ptr::lock()` returns empty `shared_ptr`, not `T` (bank C)
+3. `std::move` is a cast; moved-from is valid unspecified (bank D)
+4. Virtual dtor; slicing; `virtual` vs `override` (bank E)
+5. Smoke: release/acquire vs relaxed payload (bank A — second cold 4 closes Phase 0 A)
+
+F is at the 3+ map bar; only interview it as “which pattern / why not in `01`.”
+
+**Session rule:** 1–2 snippets. Still 15–30 min. Score honestly (4 = cold, no recap).
 
 ## Score meaning
 
@@ -41,22 +58,11 @@ CP (1–4 problems/day) stays separate.
 | Inheritance / virtual | vtable, dtor, slicing, override | 2026-08-28 | 3 | E1 delete via Base* landed (said constructor by slip); E2 missed slicing name / still compiles; E3 override≠virtual dispatch |
 | Design patterns (core set) | when/why; not memorizing UML | 2026-08-28 | 3 | F1 RAII Connection/scoped_lock; F2 State but thought class-per-state (ours is enum+table); F3 State not in 01 |
 
-## Morning queue (rotate)
+## Morning queue (retired)
 
-**Concurrency (Phase 0 until 4+):**
-1. Relaxed vs release-acquire (bank A)
-2. Relaxed counters vs publishing data (bank B)
-3. Lost wakeup + predicate (keep warm at 4)
-
-**C++ core (alternate mornings — diagnostic then drill):**
-4. Smart pointers (bank C)
-5. Value categories + `std::move` (bank D)
-6. Inheritance / virtual (bank E)
-7. Design patterns baseline (bank F) — short; one pattern deep per session once scored
+Labeled bank rotation (A then C then …) is **done** as the daily format. Use **Interview queue** above. Banks A–F remain as targets.
 
 Warm smoke (any leftover minutes): stack/heap + atomics publish.
-
-**Session rule:** 1 concurrency gap + 1 C++-core gap when energy allows; otherwise one only. Still 15–30 min total.
 
 ## Phase 0 — Wording drills (close to 4+)
 
@@ -179,11 +185,10 @@ Do not enable ASAN and TSAN together.
 
 Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4–5 for two weeks; find and fix one real contract/bug with a test.
 
-## First session back
+## Next mornings
 
-1. Hard drill: Phase 0 banks A + B (above), **or** if those are warm, diagnostic pass on banks C–D (smart ptr + move).
-2. Deep: run `08` stress tests (+ TSAN build if time).
-3. Update scores in the table; note theme for next deep day. Next mornings: rotate C++ core (C→F) alongside concurrency.
+1. Interview snippet (see Interview queue). Map to a bank; update the table.
+2. Deep/lab (`08` TSAN, themes) from the week of 2026-09-01 unless asked sooner.
 
 ### Lab status (2026-08-11)
 
@@ -191,7 +196,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-08-28 full morning: A cold 4; B 3 (flag/count swapped); C 3 (lock() API); D 3 (move=cast); E 3 after retry (override still mixed with virtual); F 3 (map). Need second cold A4 to close Phase 0 A. F caught-up bar (3+) met.
+- 2026-08-28 switched mornings to interview snippets (banks stay as answer keys). A cold 4; B/C/D/E 3; F 3+ map bar. Lab/`08` TSAN next week.
 
 ## Done well recently (don’t ignore)
 
