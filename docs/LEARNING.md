@@ -31,15 +31,15 @@ CP (1–4 problems/day) stays separate.
 | Dangling / lifetime | return `&local`; use-after-scope | 2026-08-07 | 4 | Leak→dangling aha; arena vs &local clear |
 | Atomics publish | release store after payload; acquire before read | 2026-08-06 | 4 | SPSC aha closed B1 |
 | Atomic ≠ whole object | nearby non-atomics still race | 2026-08-06 | 4 | B2 clean |
-| Relaxed counters | RMW total OK; not for publishing data | 2026-08-11 | 3 | Phase 0: drill bank below — push to 4+ |
+| Relaxed counters | RMW total OK; not for publishing data | 2026-08-28 | 3 | B1 cold; B2 missed join-sync; B3 flag/count swapped |
 | CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-11 | 4 | Lost-wakeup timeline cold; lock+atomic wait was the missing piece |
 | CV predicate | re-check condition; spurious/wrong wake | 2026-08-11 | 4 | Before-sleep check locked in; after-wake = spurious/stolen item |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-08-06 | 4 | Clear |
-| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-27 | 3 | Restart: same `i`, different payload; A2/A3 ok; not cold 4 |
-| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-08-27 | 3 | C4 copy/move clean; C5 lock≠bool; C6 two control blocks + don’t wrap raw twice |
-| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | — | 0 | Not assessed — bank D |
-| Inheritance / virtual | vtable, dtor, slicing, override | — | 0 | Not assessed — bank E |
-| Design patterns (core set) | when/why; not memorizing UML | — | 0 | Not assessed — bank F (baseline) |
+| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-28 | 4 | Cold A1/A2: same `i`, payload guaranteed only with rel/acq. One more cold 4 to close |
+| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-08-28 | 3 | C4/C6 cold; C5 lock() → empty shared_ptr not the T |
+| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-08-28 | 3 | After retry: move=cast, a still valid unspecified; D2 a lvalue / 1 rvalue. Not cold 4 |
+| Inheritance / virtual | vtable, dtor, slicing, override | 2026-08-28 | 3 | E1 delete via Base* landed (said constructor by slip); E2 missed slicing name / still compiles; E3 override≠virtual dispatch |
+| Design patterns (core set) | when/why; not memorizing UML | 2026-08-28 | 3 | F1 RAII Connection/scoped_lock; F2 State but thought class-per-state (ours is enum+table); F3 State not in 01 |
 
 ## Morning queue (rotate)
 
@@ -191,7 +191,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-08-27 bank A teach-back: payload vs doorbell landed after restart (A1–A3). Score stays 3 until a cold 4. Bank C: diagnostic 2 then drill to 3 (copy/move + dual wrap). Bank B + D–F still open. Do not bump A or C to 4 until teach-back is cold.
+- 2026-08-28 full morning: A cold 4; B 3 (flag/count swapped); C 3 (lock() API); D 3 (move=cast); E 3 after retry (override still mixed with virtual); F 3 (map). Need second cold A4 to close Phase 0 A. F caught-up bar (3+) met.
 
 ## Done well recently (don’t ignore)
 
