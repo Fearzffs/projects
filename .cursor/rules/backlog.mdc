@@ -13,7 +13,7 @@ alwaysApply: true
 
 # Morning learning ritual
 
-- At session start (when the human is doing a learning day): one **interview snippet** from [`docs/LEARNING.md`](docs/LEARNING.md) (Interview queue) — not labeled bank A1/C4 quizzes.
-- Banks A–F in LEARNING are **answer keys**. After they answer, map the snippet to a gap and update scores.
-- First weeks: remaining 3s (B flag vs count, C `lock()`, D move-as-cast, E virtual vs override / slicing), plus A smoke for a second cold 4.
-- 1–2 snippets; 15–30 minutes total. Then deep/lab only if scheduled (TSAN/themes next week unless asked).
+- At session start (learning day): one **interview round slice** from [`docs/LEARNING.md`](docs/LEARNING.md) daily cycle (Language → Concurrency → Coding → Design → Project deep-dive). 15–30 min.
+- Not labeled bank quizzes. After the slice, map misses to the gap table and update scores.
+- Next default: **C++ language** (step 1). Today 2026-08-31 did Concurrency + started `02` deep-dive.
+- Deep/lab (`08` TSAN) only if scheduled / asked.

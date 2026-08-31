@@ -1,34 +1,38 @@
 # Learning gaps tracker
 
-Short morning drill (before deep / lab work). **Interview snippets**, not labeled bank quizzes.
-Do **not** turn this into a long theory session — 15–30 minutes max.
-Then one deep block (harden a primitive or a Phase-2 theme) — lab is next week unless asked.
+Short morning drill (before deep / lab work). **One interview round slice**, 15–30 min — not a full loop, not labeled bank quizzes.
+Then one deep block only if scheduled (lab/`08` TSAN this week if asked).
 
-CP (1–4 problems/day) stays separate.
+CP (1–4 problems/day) stays separate from the **Coding** round below (Coding = talk-while-you-type a small function, not LeetCode volume).
 
 ## Ritual
 
-1. Open with **one** C++ interview snippet (buggy code, or “what do you tell the interviewer”). No A1/C4 labels until after they answer.
-2. Human answers; then reveal what’s wrong / the target; map to a gap in the table below.
-3. Update **Last checked** + **Score (1–5)** + one-line note.
-4. Optional second snippet if the first was instant. Still 15–30 min total.
-5. Deep block only if scheduled (lab/`08` TSAN next week).
+1. Do the **next round type** in the daily cycle (below). Stay in character: interviewer asks; human answers out loud.
+2. After the slice: debrief 1–2 lines; map anything that was a language/concurrency miss to the gap table; update scores.
+3. Do **not** run two round types unless the first was under ~10 min.
+4. Deep/lab only if scheduled.
 
-Banks A–F below stay as **answer keys**, not the daily prompt list.
+Banks A–F stay as **answer keys**.
 
-## Interview queue (first weeks)
+## Daily cycle (one slice per learning day)
 
-Prefer snippets that hit remaining **3**s, then keep A at 4:
+Real rounds are 45–60 min. We train a **slice** so it fits the morning. Advance one step each day (skip days are fine; don’t jump ahead).
 
-1. Relaxed **count** vs **flag** that publishes a payload (bank B)
-2. `weak_ptr::lock()` returns empty `shared_ptr`, not `T` (bank C)
-3. `std::move` is a cast; moved-from is valid unspecified (bank D)
-4. Virtual dtor; slicing; `virtual` vs `override` (bank E)
-5. Smoke: release/acquire vs relaxed payload (bank A — second cold 4 closes Phase 0 A)
+| Step | Round | 15–30 min slice | What the agent does |
+|---|---|---|---|
+| 1 | **C++ language** | 1–2 snippets (UB, `unique_ptr`/`lock()`, move, virtual/slicing) | Buggy code; no bank labels until debrief |
+| 2 | **Concurrency** | Review a hot path (flags vs counts, SPSC cursors, CV wait) | “What’s wrong / what do you tell them?” |
+| 3 | **Coding** | One small function in the editor; talk while typing | Spec + edge cases; no silent coding |
+| 4 | **Design** | Whiteboard: logger, pool, queue, or timer | Constraints, threads, shutdown, failure; no perfect UML |
+| 5 | **Project deep-dive** | Interviewer picks `02` / `03` / `05` / `08` / `11` | Contract, races, full/empty, shutdown |
 
-F is at the 3+ map bar; only interview it as “which pattern / why not in `01`.”
+Then wrap to step 1.
 
-**Session rule:** 1–2 snippets. Still 15–30 min. Score honestly (4 = cold, no recap).
+**Language/concurrency snippets (still fill remaining 3s):** `weak_ptr::lock()`, `std::move` as cast, virtual dtor / slicing / `override`, flag vs count (B needs a second cold 4).
+
+**Last slice (2026-08-31):** step 2 (concurrency — pass) then started step 5 (`02` SPSC — borderline). **Next learning day: step 1 (C++ language)** or finish a short `02` follow-up if they ask; default is step 1 so we don’t skip language.
+
+**Session rule:** 15–30 min. Score honestly (4 = cold).
 
 ## Score meaning
 
@@ -48,11 +52,11 @@ F is at the 3+ map bar; only interview it as “which pattern / why not in `01`.
 | Dangling / lifetime | return `&local`; use-after-scope | 2026-08-07 | 4 | Leak→dangling aha; arena vs &local clear |
 | Atomics publish | release store after payload; acquire before read | 2026-08-06 | 4 | SPSC aha closed B1 |
 | Atomic ≠ whole object | nearby non-atomics still race | 2026-08-06 | 4 | B2 clean |
-| Relaxed counters | RMW total OK; not for publishing data | 2026-08-28 | 3 | B1 cold; B2 missed join-sync; B3 flag/count swapped |
+| Relaxed counters | RMW total OK; not for publishing data | 2026-08-31 | 4 | Interview: drop count relaxed OK; ready flag must rel/acq with payload. One more cold 4 to close Phase 0 B |
 | CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-11 | 4 | Lost-wakeup timeline cold; lock+atomic wait was the missing piece |
 | CV predicate | re-check condition; spurious/wrong wake | 2026-08-11 | 4 | Before-sleep check locked in; after-wake = spurious/stolen item |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-08-06 | 4 | Clear |
-| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-28 | 4 | Cold A1/A2: same `i`, payload guaranteed only with rel/acq. One more cold 4 to close |
+| Relaxed vs release/acquire | one sentence + counterexample | 2026-08-31 | 4 | Second drill-day cold 4 (ready/payload in interview). Phase 0 A closed |
 | `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-08-28 | 3 | C4/C6 cold; C5 lock() → empty shared_ptr not the T |
 | Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-08-28 | 3 | After retry: move=cast, a still valid unspecified; D2 a lvalue / 1 rvalue. Not cold 4 |
 | Inheritance / virtual | vtable, dtor, slicing, override | 2026-08-28 | 3 | E1 delete via Base* landed (said constructor by slip); E2 missed slicing name / still compiles; E3 override≠virtual dispatch |
@@ -60,7 +64,7 @@ F is at the 3+ map bar; only interview it as “which pattern / why not in `01`.
 
 ## Morning queue (retired)
 
-Labeled bank rotation (A then C then …) is **done** as the daily format. Use **Interview queue** above. Banks A–F remain as targets.
+Labeled bank rotation (A then C then …) is **done** as the daily format. Use **Daily cycle** above. Banks A–F remain as targets.
 
 Warm smoke (any leftover minutes): stack/heap + atomics publish.
 
@@ -187,8 +191,8 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 
 ## Next mornings
 
-1. Interview snippet (see Interview queue). Map to a bank; update the table.
-2. Deep/lab (`08` TSAN, themes) from the week of 2026-09-01 unless asked sooner.
+1. Daily cycle step (see above). Default next: **step 1 C++ language**.
+2. Deep/lab (`08` TSAN, themes) this week only if asked.
 
 ### Lab status (2026-08-11)
 
@@ -196,7 +200,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-08-28 switched mornings to interview snippets (banks stay as answer keys). A cold 4; B/C/D/E 3; F 3+ map bar. Lab/`08` TSAN next week.
+- 2026-08-31 first interview: drop-count relaxed OK, ready flag rel/acq. A second cold 4 (Phase 0 A closed). B 3→4 (need one more 4 to close B).
 
 ## Done well recently (don’t ignore)
 
