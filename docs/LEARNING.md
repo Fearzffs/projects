@@ -28,9 +28,9 @@ Real rounds are 45–60 min. We train a **slice** so it fits the morning. Advanc
 
 Then wrap to step 1.
 
-**Language/concurrency snippets (still fill remaining 3s):** `weak_ptr::lock()`, `std::move` as cast, virtual dtor / slicing / `override`, flag vs count (B needs a second cold 4).
+**Language/concurrency snippets (remaining 3s):** `std::move` aftermath ≠ UB (D), virtual dtor / slicing / `override` (E). A and B at 4 (Phase 0 wording closed).
 
-**Last slice (2026-08-31):** step 2 (concurrency — pass) then started step 5 (`02` SPSC — borderline). **Next learning day: step 1 (C++ language)** or finish a short `02` follow-up if they ask; default is step 1 so we don’t skip language.
+**Last slice (2026-09-02):** full cycle through step 5 (`05` deep-dive pass: SPSC+producer mutex, dedicated writer, dtor shutdown, try_log false). **Next: wrap to step 1 language.**
 
 **Session rule:** 15–30 min. Score honestly (4 = cold).
 
@@ -52,13 +52,13 @@ Then wrap to step 1.
 | Dangling / lifetime | return `&local`; use-after-scope | 2026-08-07 | 4 | Leak→dangling aha; arena vs &local clear |
 | Atomics publish | release store after payload; acquire before read | 2026-08-06 | 4 | SPSC aha closed B1 |
 | Atomic ≠ whole object | nearby non-atomics still race | 2026-08-06 | 4 | B2 clean |
-| Relaxed counters | RMW total OK; not for publishing data | 2026-08-31 | 4 | Interview: drop count relaxed OK; ready flag must rel/acq with payload. One more cold 4 to close Phase 0 B |
+| Relaxed counters | RMW total OK; not for publishing data | 2026-09-02 | 4 | Second interview cold 4: jobs_finished relaxed, done rel/acq for result. Phase 0 B closed |
 | CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-11 | 4 | Lost-wakeup timeline cold; lock+atomic wait was the missing piece |
 | CV predicate | re-check condition; spurious/wrong wake | 2026-08-11 | 4 | Before-sleep check locked in; after-wake = spurious/stolen item |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-08-06 | 4 | Clear |
 | Relaxed vs release/acquire | one sentence + counterexample | 2026-08-31 | 4 | Second drill-day cold 4 (ready/payload in interview). Phase 0 A closed |
-| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-08-28 | 3 | C4/C6 cold; C5 lock() → empty shared_ptr not the T |
-| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-08-28 | 3 | After retry: move=cast, a still valid unspecified; D2 a lvalue / 1 rvalue. Not cold 4 |
+| `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-09-02 | 4 | Interview: if (auto s = wp.lock()); don’t lock().get() (temp dies → dangling) |
+| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-09-02 | 3 | Interview: move=rvalue cast cold; still called size/assign UB. Moved-from = valid unspecified |
 | Inheritance / virtual | vtable, dtor, slicing, override | 2026-08-28 | 3 | E1 delete via Base* landed (said constructor by slip); E2 missed slicing name / still compiles; E3 override≠virtual dispatch |
 | Design patterns (core set) | when/why; not memorizing UML | 2026-08-28 | 3 | F1 RAII Connection/scoped_lock; F2 State but thought class-per-state (ours is enum+table); F3 State not in 01 |
 
@@ -191,7 +191,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 
 ## Next mornings
 
-1. Daily cycle step (see above). Default next: **step 1 C++ language**.
+1. Daily cycle step (see above). Default next: **step 1 C++ language** (cycle wrapped).
 2. Deep/lab (`08` TSAN, themes) this week only if asked.
 
 ### Lab status (2026-08-11)
@@ -200,7 +200,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-08-31 first interview: drop-count relaxed OK, ready flag rel/acq. A second cold 4 (Phase 0 A closed). B 3→4 (need one more 4 to close B).
+- 2026-09-02 finished five-slice loop. `05` deep-dive pass (mutex serializes producers only; dtor shutdown; try_log false after). Next: language (move ≠ UB leftover).
 
 ## Done well recently (don’t ignore)
 
