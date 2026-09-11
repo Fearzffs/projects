@@ -15,5 +15,5 @@ alwaysApply: true
 
 - At session start (learning day): one **interview round slice** from [`docs/LEARNING.md`](docs/LEARNING.md) daily cycle (Language → Concurrency → Coding → Design → Project deep-dive). 15–30 min.
 - Not labeled bank quizzes. After the slice, map misses to the gap table and update scores.
-- Next default: **C++ language** (step 1). 2026-09-10 completed another five-slice loop (`03` deep-dive last).
+- Next default: **C++ language** (step 1). 2026-09-11 completed five-slice loop (`06` last).
 - Deep/lab (`08` TSAN) only if scheduled / asked.
