@@ -28,9 +28,9 @@ Real rounds are 45–60 min. We train a **slice** so it fits the morning. Advanc
 
 Then wrap to step 1.
 
-**Language/concurrency snippets (remaining 3s):** `std::move` aftermath ≠ UB (D), virtual dtor / slicing / `override` (E). A and B at 4 (Phase 0 wording closed).
+**Language/concurrency snippets (remaining 3s):** `override` is a compile check, not dispatch (E). A, B, D at 4.
 
-**Last slice (2026-09-11):** full cycle through `06` (pool runs lambdas yes; still thought sleep-only-when-empty + drain-all). **Next: wrap to step 1 language.**
+**Last slice (2026-09-14):** full cycle through `04` (bus ≠ poll; vs `10` signal). **Next: wrap to step 1 language.**
 
 **Session rule:** 15–30 min. Score honestly (4 = cold).
 
@@ -54,13 +54,13 @@ Then wrap to step 1.
 | Atomic ≠ whole object | nearby non-atomics still race | 2026-08-06 | 4 | B2 clean |
 | Relaxed counters | RMW total OK; not for publishing data | 2026-09-02 | 4 | Second interview cold 4: jobs_finished relaxed, done rel/acq for result. Phase 0 B closed |
 | CV + mutex | wait unlocks; avoids lost wakeup | 2026-08-11 | 4 | Lost-wakeup timeline cold; lock+atomic wait was the missing piece |
-| CV predicate | re-check condition; spurious/wrong wake | 2026-09-10 | 4 | Interview: said check size after nudge; lost wakeup / stolen item not named |
+| CV predicate | re-check condition; spurious/wrong wake | 2026-09-14 | 4 | Saw `if` vs `while` after nudge; spurious wake → empty `front()` |
 | notify_one vs all | one worker vs shutdown/broadcast | 2026-09-11 | 4 | Interview: notify_all on shutdown so join doesn’t hang on sleepers |
 | Relaxed vs release/acquire | one sentence + counterexample | 2026-08-31 | 4 | Second drill-day cold 4 (ready/payload in interview). Phase 0 A closed |
 | `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-09-02 | 4 | Interview: if (auto s = wp.lock()); don’t lock().get() (temp dies → dangling) |
-| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-09-11 | 3 | Discarded `move(a)` = no-op, then `b` steals. Need next-day cold for 4 |
-| Inheritance / virtual | vtable, dtor, slicing, override | 2026-09-11 | 3 | virtual on Base = dispatch yes; thought omit override = compile/vtable fail. override is only a check |
-| Design patterns (core set) | when/why; not memorizing UML | 2026-08-28 | 3 | F1 RAII Connection/scoped_lock; F2 State but thought class-per-state (ours is enum+table); F3 State not in 01 |
+| Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-09-14 | 4 | Cold: discarded move no-op; steal is into `b`, `a` still alive |
+| Inheritance / virtual | vtable, dtor, slicing, override | 2026-09-14 | 3 | vtable dispatch yes; still thought omit override = error. override is only a check |
+| Design patterns (core set) | when/why; not memorizing UML | 2026-09-14 | 3 | Observer: `10` Signal = I emit, slot runs; `04` bus = typed publish, pool, no poll |
 
 ## Morning queue (retired)
 
@@ -200,7 +200,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-09-11 five-slice loop done. `06`: work on pool yes; wait_until leftover; shutdown drops pending. Next: language.
+- 2026-09-14 five-slice loop: D 4; latch; `04` vs `10` (publish is emit, not poll). Next: language.
 
 ## Done well recently (don’t ignore)
 
