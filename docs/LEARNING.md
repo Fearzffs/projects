@@ -30,7 +30,7 @@ Then wrap to step 1.
 
 **Language/concurrency snippets (remaining 3s):** none on C–E. Keep F at 3+ map. A, B, D, E at 4.
 
-**Last slice (2026-09-16):** full cycle through `09` (refcount yes; precede direction flipped; freeze after `try_run` yes). **Next: wrap to step 1 language.**
+**Last slice (2026-09-18):** full cycle through `07` (nullptr, dtor before reset, not thread-safe on purpose). **Next: wrap to step 1 language.**
 
 **Session rule:** 15–30 min. Score honestly (4 = cold).
 
@@ -59,7 +59,7 @@ Then wrap to step 1.
 | Relaxed vs release/acquire | one sentence + counterexample | 2026-08-31 | 4 | Second drill-day cold 4 (ready/payload in interview). Phase 0 A closed |
 | `unique_ptr` / `shared_ptr` / `weak_ptr` | ownership, control block, cycles | 2026-09-02 | 4 | Interview: if (auto s = wp.lock()); don’t lock().get() (temp dies → dangling) |
 | Lvalue / rvalue / `std::move` | value category vs type; move ≠ magic | 2026-09-14 | 4 | Cold: discarded move no-op; steal is into `b`, `a` still alive |
-| Inheritance / virtual | vtable, dtor, slicing, override | 2026-09-16 | 4 | Cold: fooo no override = Base::foo; fooo override = compile error |
+| Inheritance / virtual | vtable, dtor, slicing, override | 2026-09-18 | 4 | Cold: virtual dtor (leak/UB extra); slicing compiles, extra chopped |
 | Design patterns (core set) | when/why; not memorizing UML | 2026-09-14 | 3 | Observer: `10` Signal = I emit, slot runs; `04` bus = typed publish, pool, no poll |
 
 ## Morning queue (retired)
@@ -200,7 +200,7 @@ Cold: ~5 min each on `01`–`12` (threads + failure modes); LEARNING gaps at 4�
 - `08` Debug + TSAN ctest: all passed (including stress).
 - `05` Debug ctest: all passed (including stress).
 - API contracts documented in `05` / `08` / `11` READMEs.
-- 2026-09-16 five-slice loop: E 4; SubHandle; `09` freeze after try_run, precede direction leftover. Next: language.
+- 2026-09-18 five-slice loop: `07` pass (dtor before reset; no lock on purpose). Next: language.
 
 ## Done well recently (don’t ignore)
 
